@@ -19,11 +19,14 @@
 "float"								{yylval.data_type=2; return FLOAT;}
 "double"							{yylval.data_type=3; return DOUBLE;}
 "read"								{return READ;}
+"write"								{return WRITE;}
 "("									{return LB;}
 ")"									{return RB;}
 ";"									{return SEMICOLON;}
 ","									{return COMA;}
 ":="								{return ASSIGNMENT;}
+'[^'"]*'							{strcpy(yylval.var_name, yytext);
+									 return QUOTED_STRING;}
 [a-zA-Z]+							{strcpy(yylval.var_name, yytext);
 									 return VAR;}
 [0-9]+ 								{strcpy(yylval.var_name, yytext);

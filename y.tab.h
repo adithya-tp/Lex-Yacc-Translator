@@ -59,10 +59,12 @@ extern int yydebug;
     READ = 269,
     LB = 270,
     RB = 271,
-    INT = 272,
-    CHAR = 273,
-    FLOAT = 274,
-    DOUBLE = 275
+    WRITE = 272,
+    QUOTED_STRING = 273,
+    INT = 274,
+    CHAR = 275,
+    FLOAT = 276,
+    DOUBLE = 277
   };
 #endif
 /* Tokens.  */
@@ -80,22 +82,24 @@ extern int yydebug;
 #define READ 269
 #define LB 270
 #define RB 271
-#define INT 272
-#define CHAR 273
-#define FLOAT 274
-#define DOUBLE 275
+#define WRITE 272
+#define QUOTED_STRING 273
+#define INT 274
+#define CHAR 275
+#define FLOAT 276
+#define DOUBLE 277
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 19 "project.y" /* yacc.c:1909  */
+#line 20 "project.y" /* yacc.c:1909  */
 
 int data_type;
 char var_name[30];
 
-#line 99 "y.tab.h" /* yacc.c:1909  */
+#line 103 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

@@ -1,0 +1,11 @@
+Procedure Main()
+Begin:
+	var c:char;
+	var num:int;
+	var i,flag:int;
+	flag:=0;
+	read(c,flag);
+	write('Enter the value to be checked');
+	write('The value ', num, ' is not prime');
+	c:=flag;
+End:

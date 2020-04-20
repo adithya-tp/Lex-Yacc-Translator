@@ -14,6 +14,7 @@
 	extern int lookup_in_table(char var[30]);
 	extern void insert_to_table(char var[30], int type);
 	char var_list[20][30];	//20 variable names with each variable being atmost 50 characters long
+	int string_or_var[20];
 	extern int *yytext;
 %}
 %union{
@@ -21,7 +22,7 @@ int data_type;
 char var_name[30];
 }
 
-%token NUMBER PROC MAIN BGIN COLON END ASSIGNMENT VAR_START COMA SEMICOLON VAR READ LB RB
+%token NUMBER PROC MAIN BGIN COLON END ASSIGNMENT VAR_START COMA SEMICOLON VAR READ LB RB WRITE QUOTED_STRING
 
 %token<data_type>INT
 %token<data_type>CHAR
@@ -108,6 +109,64 @@ STATEMENT: 			VAR_START VAR_LIST COLON TYPE SEMICOLON {
 						}
 						printf(");\n");
 						idx=0;
+					}
+
+					| WRITE LB WRITE_VAR_LIST RB SEMICOLON {
+						char *s;
+						printf("printf(\"");
+						for(int i = 0; i < idx; i++) {
+							if(string_or_var[i] == 1) {
+								s = var_list[i];
+								s++;
+								s[strlen(s)-1] = 0;
+								printf("%s", s);
+							}
+							else {	
+								if((temp=lookup_in_table(var_list[i])) != -1) {
+									if(temp==0)
+										printf("%%d");
+									else if(temp==1)
+										printf("%%c");
+									else if(temp==2)
+										printf("%%f");
+									else
+										printf("%%e");
+								}
+								else
+								{
+									printf("Cannot read undeclared variable %s !", yylval.var_name);
+									yyerror("");
+									exit(0);
+								}
+							}
+						}
+						printf("\"");
+						for(int i = 0; i < idx; i++) {
+							if(string_or_var[i] != 1)
+								printf(",%s", var_list[i]);
+						}
+						printf(");\n");
+						idx = 0;
+					}
+								
+
+WRITE_VAR_LIST:		QUOTED_STRING {
+						strcpy(var_list[idx], yylval.var_name); 
+						string_or_var[idx]=1; 
+						idx++;
+					} COMA WRITE_VAR_LIST
+					| VAR {
+						strcpy(var_list[idx], yylval.var_name); 
+						idx++;
+					} COMA WRITE_VAR_LIST
+					| QUOTED_STRING{
+						strcpy(var_list[idx], yylval.var_name);
+						string_or_var[idx]=1;
+						idx++;
+					}
+					| VAR{
+						strcpy(var_list[idx], yylval.var_name);
+						idx++;
 					}
 
 READ_VAR_LIST:		VAR {
