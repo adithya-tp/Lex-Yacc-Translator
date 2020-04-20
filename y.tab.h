@@ -56,10 +56,13 @@ extern int yydebug;
     COMA = 266,
     SEMICOLON = 267,
     VAR = 268,
-    INT = 269,
-    CHAR = 270,
-    FLOAT = 271,
-    DOUBLE = 272
+    READ = 269,
+    LB = 270,
+    RB = 271,
+    INT = 272,
+    CHAR = 273,
+    FLOAT = 274,
+    DOUBLE = 275
   };
 #endif
 /* Tokens.  */
@@ -74,10 +77,13 @@ extern int yydebug;
 #define COMA 266
 #define SEMICOLON 267
 #define VAR 268
-#define INT 269
-#define CHAR 270
-#define FLOAT 271
-#define DOUBLE 272
+#define READ 269
+#define LB 270
+#define RB 271
+#define INT 272
+#define CHAR 273
+#define FLOAT 274
+#define DOUBLE 275
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -89,7 +95,7 @@ union YYSTYPE
 int data_type;
 char var_name[30];
 
-#line 93 "y.tab.h" /* yacc.c:1909  */
+#line 99 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

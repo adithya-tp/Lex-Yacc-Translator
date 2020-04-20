@@ -21,7 +21,7 @@ int data_type;
 char var_name[30];
 }
 
-%token NUMBER PROC MAIN BGIN COLON END ASSIGNMENT VAR_START COMA SEMICOLON VAR
+%token NUMBER PROC MAIN BGIN COLON END ASSIGNMENT VAR_START COMA SEMICOLON VAR READ LB RB
 
 %token<data_type>INT
 %token<data_type>CHAR
@@ -53,9 +53,11 @@ STATEMENT: 			VAR_START VAR_LIST COLON TYPE SEMICOLON {
 							printf("float ");
 						else if(current_data_type == 3)
 							printf("double ");
-						for(int i = 0; i < idx - 1; i++){	
+						for(int i = 0; i < idx - 1; i++){
+							insert_to_table(var_list[i], current_data_type);	
 							printf("%s,", var_list[i]);
 						}
+						insert_to_table(var_list[idx - 1], current_data_type);
 						printf("%s;\n", var_list[idx - 1]);
 						idx = 0;
 					}
@@ -80,6 +82,43 @@ STATEMENT: 			VAR_START VAR_LIST COLON TYPE SEMICOLON {
 					ASSIGNMENT {printf("=");} A_EXPN SEMICOLON {
 						printf(";\n");
 					}
+					| READ LB READ_VAR_LIST RB SEMICOLON {
+						printf("scanf(\"");
+						for(int i = 0; i < idx; i++) {
+							if((temp=lookup_in_table(var_list[i])) != -1) {
+								if(temp==0)
+									printf("%%d");
+								else if(temp==1)
+									printf("%%c");
+								else if(temp==2)
+									printf("%%f");
+								else
+									printf("%%e");
+							}
+							else
+							{
+								printf("Cannot read undeclared variable %s !", yylval.var_name);
+								yyerror("");
+								exit(0);
+							}
+						}
+						printf("\"");
+						for(int i = 0; i < idx; i++) {
+							printf(",&%s", var_list[i]);
+						}
+						printf(");\n");
+						idx=0;
+					}
+
+READ_VAR_LIST:		VAR {
+						strcpy(var_list[idx], yylval.var_name); 
+						idx++;
+					} COMA READ_VAR_LIST
+					| VAR {
+						strcpy(var_list[idx], yylval.var_name); 
+						idx++;
+					}
+
 A_EXPN : 			VAR {
 						if((temp=lookup_in_table($1))!=-1) {
 							if(expn_type==-1) {
@@ -101,12 +140,10 @@ A_EXPN : 			VAR {
 					| NUMBER {printf("%s", yylval.var_name);}
 
 VAR_LIST: 			VAR {
-						insert_to_table($1, current_data_type);
 						strcpy(var_list[idx], $1); 
 						idx++;
 					} COMA VAR_LIST
 					| VAR {
-						insert_to_table($1, current_data_type);
 						strcpy(var_list[idx], $1); 
 						idx++;
 					}
@@ -114,7 +151,7 @@ VAR_LIST: 			VAR {
 
 TYPE : 				INT {
 						$$=$1;
-						current_data_type=$1;
+						current_data_type=$1;	
 					}
 					| CHAR  {
 						$$=$1;
@@ -126,7 +163,7 @@ TYPE : 				INT {
 					}
 					| DOUBLE {
 						$$=$1;
-						current_data_type=$1;
+						current_data_type=$1; 
 					}
 
 %%

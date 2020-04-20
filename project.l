@@ -18,6 +18,9 @@
 "char"								{yylval.data_type=1; return CHAR;}
 "float"								{yylval.data_type=2; return FLOAT;}
 "double"							{yylval.data_type=3; return DOUBLE;}
+"read"								{return READ;}
+"("									{return LB;}
+")"									{return RB;}
 ";"									{return SEMICOLON;}
 ","									{return COMA;}
 ":="								{return ASSIGNMENT;}
