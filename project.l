@@ -12,14 +12,15 @@
 "Main()"							{return MAIN;}
 "Begin"								{return BGIN;}
 ":"									{return COLON;}
+"Exit"								{return EXIT;}
 "End"								{return END;}
 "var"								{return VAR_START;}
 "int"								{yylval.data_type=0; return INT;}
 "char"								{yylval.data_type=1; return CHAR;}
 "float"								{yylval.data_type=2; return FLOAT;}
 "double"							{yylval.data_type=3; return DOUBLE;}
-"read"								{return READ;}
-"write"								{return WRITE;}
+"Read"								{return READ;}
+"Write"								{return WRITE;}
 "("									{return LB;}
 ")"									{return RB;}
 ";"									{return SEMICOLON;}

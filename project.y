@@ -22,7 +22,7 @@ int data_type;
 char var_name[30];
 }
 
-%token NUMBER PROC MAIN BGIN COLON END ASSIGNMENT VAR_START COMA SEMICOLON VAR READ LB RB WRITE QUOTED_STRING
+%token NUMBER PROC MAIN BGIN COLON END ASSIGNMENT VAR_START COMA SEMICOLON VAR READ LB RB WRITE QUOTED_STRING EXIT
 
 %token<data_type>INT
 %token<data_type>CHAR
@@ -42,10 +42,10 @@ prm:	 			PROC MAIN BGIN COLON{
 						printf("}\n");
 					}
 
-STATEMENTS: 		STATEMENTS {printf("\t");} STATEMENT
+STATEMENTS: 		STATEMENTS STATEMENT
 					| ;
 
-STATEMENT: 			VAR_START VAR_LIST COLON TYPE SEMICOLON {
+STATEMENT: 			{printf("\t");} VAR_START VAR_LIST COLON TYPE SEMICOLON {
 						if(current_data_type == 0)
 							printf("int ");
 						else if(current_data_type == 1)
@@ -62,7 +62,7 @@ STATEMENT: 			VAR_START VAR_LIST COLON TYPE SEMICOLON {
 						printf("%s;\n", var_list[idx - 1]);
 						idx = 0;
 					}
-					| VAR {
+					| {printf("\t");} VAR {
 							printf("%s", yylval.var_name);
 							if((temp=lookup_in_table(yylval.var_name))!=-1) {
 								if(expn_type==-1)
@@ -83,7 +83,7 @@ STATEMENT: 			VAR_START VAR_LIST COLON TYPE SEMICOLON {
 					ASSIGNMENT {printf("=");} A_EXPN SEMICOLON {
 						printf(";\n");
 					}
-					| READ LB READ_VAR_LIST RB SEMICOLON {
+					| {printf("\t");} READ LB READ_VAR_LIST RB SEMICOLON {
 						printf("scanf(\"");
 						for(int i = 0; i < idx; i++) {
 							if((temp=lookup_in_table(var_list[i])) != -1) {
@@ -111,7 +111,7 @@ STATEMENT: 			VAR_START VAR_LIST COLON TYPE SEMICOLON {
 						idx=0;
 					}
 
-					| WRITE LB WRITE_VAR_LIST RB SEMICOLON {
+					| {printf("\t");} WRITE LB WRITE_VAR_LIST RB SEMICOLON {
 						char *s;
 						printf("printf(\"");
 						for(int i = 0; i < idx; i++) {
@@ -148,6 +148,7 @@ STATEMENT: 			VAR_START VAR_LIST COLON TYPE SEMICOLON {
 						printf(");\n");
 						idx = 0;
 					}
+					| EXIT COLON {printf("Exit:\n");}
 								
 
 WRITE_VAR_LIST:		QUOTED_STRING {

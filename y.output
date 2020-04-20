@@ -6,112 +6,128 @@ Grammar
 
     2 prm: PROC MAIN BGIN COLON $@1 STATEMENTS END COLON
 
-    3 $@2: %empty
+    3 STATEMENTS: STATEMENTS STATEMENT
+    4           | %empty
 
-    4 STATEMENTS: STATEMENTS $@2 STATEMENT
-    5           | %empty
+    5 $@2: %empty
 
-    6 STATEMENT: VAR_START VAR_LIST COLON TYPE SEMICOLON
+    6 STATEMENT: $@2 VAR_START VAR_LIST COLON TYPE SEMICOLON
 
     7 $@3: %empty
 
     8 $@4: %empty
 
-    9 STATEMENT: VAR $@3 ASSIGNMENT $@4 A_EXPN SEMICOLON
-   10          | READ LB READ_VAR_LIST RB SEMICOLON
-   11          | WRITE LB WRITE_VAR_LIST RB SEMICOLON
+    9 $@5: %empty
 
-   12 $@5: %empty
+   10 STATEMENT: $@3 VAR $@4 ASSIGNMENT $@5 A_EXPN SEMICOLON
 
-   13 WRITE_VAR_LIST: QUOTED_STRING $@5 COMA WRITE_VAR_LIST
+   11 $@6: %empty
 
-   14 $@6: %empty
+   12 STATEMENT: $@6 READ LB READ_VAR_LIST RB SEMICOLON
 
-   15 WRITE_VAR_LIST: VAR $@6 COMA WRITE_VAR_LIST
-   16               | QUOTED_STRING
-   17               | VAR
+   13 $@7: %empty
 
-   18 $@7: %empty
+   14 STATEMENT: $@7 WRITE LB WRITE_VAR_LIST RB SEMICOLON
+   15          | EXIT COLON
 
-   19 READ_VAR_LIST: VAR $@7 COMA READ_VAR_LIST
-   20              | VAR
+   16 $@8: %empty
 
-   21 A_EXPN: VAR
-   22       | NUMBER
+   17 WRITE_VAR_LIST: QUOTED_STRING $@8 COMA WRITE_VAR_LIST
 
-   23 $@8: %empty
+   18 $@9: %empty
 
-   24 VAR_LIST: VAR $@8 COMA VAR_LIST
-   25         | VAR
+   19 WRITE_VAR_LIST: VAR $@9 COMA WRITE_VAR_LIST
+   20               | QUOTED_STRING
+   21               | VAR
 
-   26 TYPE: INT
-   27     | CHAR
-   28     | FLOAT
-   29     | DOUBLE
+   22 $@10: %empty
+
+   23 READ_VAR_LIST: VAR $@10 COMA READ_VAR_LIST
+   24              | VAR
+
+   25 A_EXPN: VAR
+   26       | NUMBER
+
+   27 $@11: %empty
+
+   28 VAR_LIST: VAR $@11 COMA VAR_LIST
+   29         | VAR
+
+   30 TYPE: INT
+   31     | CHAR
+   32     | FLOAT
+   33     | DOUBLE
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
 error (256)
-NUMBER (258) 22
+NUMBER (258) 26
 PROC (259) 2
 MAIN (260) 2
 BGIN (261) 2
-COLON (262) 2 6
+COLON (262) 2 6 15
 END (263) 2
-ASSIGNMENT (264) 9
+ASSIGNMENT (264) 10
 VAR_START (265) 6
-COMA (266) 13 15 19 24
-SEMICOLON (267) 6 9 10 11
-VAR (268) 9 15 17 19 20 21 24 25
-READ (269) 10
-LB (270) 10 11
-RB (271) 10 11
-WRITE (272) 11
-QUOTED_STRING (273) 13 16
-INT (274) 26
-CHAR (275) 27
-FLOAT (276) 28
-DOUBLE (277) 29
+COMA (266) 17 19 23 28
+SEMICOLON (267) 6 10 12 14
+VAR (268) 10 19 21 23 24 25 28 29
+READ (269) 12
+LB (270) 12 14
+RB (271) 12 14
+WRITE (272) 14
+QUOTED_STRING (273) 17 20
+EXIT (274) 15
+INT (275) 30
+CHAR (276) 31
+FLOAT (277) 32
+DOUBLE (278) 33
 
 
 Nonterminals, with rules where they appear
 
-$accept (23)
+$accept (24)
     on left: 0
-prm (24)
+prm (25)
     on left: 2, on right: 0
-$@1 (25)
+$@1 (26)
     on left: 1, on right: 2
-STATEMENTS (26)
-    on left: 4 5, on right: 2 4
-$@2 (27)
-    on left: 3, on right: 4
+STATEMENTS (27)
+    on left: 3 4, on right: 2 3
 STATEMENT (28)
-    on left: 6 9 10 11, on right: 4
-$@3 (29)
-    on left: 7, on right: 9
-$@4 (30)
-    on left: 8, on right: 9
-WRITE_VAR_LIST (31)
-    on left: 13 15 16 17, on right: 11 13 15
+    on left: 6 10 12 14 15, on right: 3
+$@2 (29)
+    on left: 5, on right: 6
+$@3 (30)
+    on left: 7, on right: 10
+$@4 (31)
+    on left: 8, on right: 10
 $@5 (32)
-    on left: 12, on right: 13
+    on left: 9, on right: 10
 $@6 (33)
-    on left: 14, on right: 15
-READ_VAR_LIST (34)
-    on left: 19 20, on right: 10 19
-$@7 (35)
+    on left: 11, on right: 12
+$@7 (34)
+    on left: 13, on right: 14
+WRITE_VAR_LIST (35)
+    on left: 17 19 20 21, on right: 14 17 19
+$@8 (36)
+    on left: 16, on right: 17
+$@9 (37)
     on left: 18, on right: 19
-A_EXPN (36)
-    on left: 21 22, on right: 9
-VAR_LIST (37)
-    on left: 24 25, on right: 6 24
-$@8 (38)
-    on left: 23, on right: 24
-TYPE (39)
-    on left: 26 27 28 29, on right: 6
+READ_VAR_LIST (38)
+    on left: 23 24, on right: 12 23
+$@10 (39)
+    on left: 22, on right: 23
+A_EXPN (40)
+    on left: 25 26, on right: 10
+VAR_LIST (41)
+    on left: 28 29, on right: 6 28
+$@11 (42)
+    on left: 27, on right: 28
+TYPE (43)
+    on left: 30 31 32 33, on right: 6
 
 
 State 0
@@ -171,7 +187,7 @@ State 7
 
     2 prm: PROC MAIN BGIN COLON $@1 . STATEMENTS END COLON
 
-    $default  reduce using rule 5 (STATEMENTS)
+    $default  reduce using rule 4 (STATEMENTS)
 
     STATEMENTS  go to state 8
 
@@ -179,389 +195,427 @@ State 7
 State 8
 
     2 prm: PROC MAIN BGIN COLON $@1 STATEMENTS . END COLON
-    4 STATEMENTS: STATEMENTS . $@2 STATEMENT
+    3 STATEMENTS: STATEMENTS . STATEMENT
 
-    END  shift, and go to state 9
+    END   shift, and go to state 9
+    EXIT  shift, and go to state 10
 
-    $default  reduce using rule 3 ($@2)
+    VAR       reduce using rule 7 ($@3)
+    READ      reduce using rule 11 ($@6)
+    WRITE     reduce using rule 13 ($@7)
+    $default  reduce using rule 5 ($@2)
 
-    $@2  go to state 10
+    STATEMENT  go to state 11
+    $@2        go to state 12
+    $@3        go to state 13
+    $@6        go to state 14
+    $@7        go to state 15
 
 
 State 9
 
     2 prm: PROC MAIN BGIN COLON $@1 STATEMENTS END . COLON
 
-    COLON  shift, and go to state 11
+    COLON  shift, and go to state 16
 
 
 State 10
 
-    4 STATEMENTS: STATEMENTS $@2 . STATEMENT
+   15 STATEMENT: EXIT . COLON
 
-    VAR_START  shift, and go to state 12
-    VAR        shift, and go to state 13
-    READ       shift, and go to state 14
-    WRITE      shift, and go to state 15
-
-    STATEMENT  go to state 16
+    COLON  shift, and go to state 17
 
 
 State 11
+
+    3 STATEMENTS: STATEMENTS STATEMENT .
+
+    $default  reduce using rule 3 (STATEMENTS)
+
+
+State 12
+
+    6 STATEMENT: $@2 . VAR_START VAR_LIST COLON TYPE SEMICOLON
+
+    VAR_START  shift, and go to state 18
+
+
+State 13
+
+   10 STATEMENT: $@3 . VAR $@4 ASSIGNMENT $@5 A_EXPN SEMICOLON
+
+    VAR  shift, and go to state 19
+
+
+State 14
+
+   12 STATEMENT: $@6 . READ LB READ_VAR_LIST RB SEMICOLON
+
+    READ  shift, and go to state 20
+
+
+State 15
+
+   14 STATEMENT: $@7 . WRITE LB WRITE_VAR_LIST RB SEMICOLON
+
+    WRITE  shift, and go to state 21
+
+
+State 16
 
     2 prm: PROC MAIN BGIN COLON $@1 STATEMENTS END COLON .
 
     $default  reduce using rule 2 (prm)
 
 
-State 12
-
-    6 STATEMENT: VAR_START . VAR_LIST COLON TYPE SEMICOLON
-
-    VAR  shift, and go to state 17
-
-    VAR_LIST  go to state 18
-
-
-State 13
-
-    9 STATEMENT: VAR . $@3 ASSIGNMENT $@4 A_EXPN SEMICOLON
-
-    $default  reduce using rule 7 ($@3)
-
-    $@3  go to state 19
-
-
-State 14
-
-   10 STATEMENT: READ . LB READ_VAR_LIST RB SEMICOLON
-
-    LB  shift, and go to state 20
-
-
-State 15
-
-   11 STATEMENT: WRITE . LB WRITE_VAR_LIST RB SEMICOLON
-
-    LB  shift, and go to state 21
-
-
-State 16
-
-    4 STATEMENTS: STATEMENTS $@2 STATEMENT .
-
-    $default  reduce using rule 4 (STATEMENTS)
-
-
 State 17
 
-   24 VAR_LIST: VAR . $@8 COMA VAR_LIST
-   25         | VAR .
+   15 STATEMENT: EXIT COLON .
 
-    COLON     reduce using rule 25 (VAR_LIST)
-    $default  reduce using rule 23 ($@8)
-
-    $@8  go to state 22
+    $default  reduce using rule 15 (STATEMENT)
 
 
 State 18
 
-    6 STATEMENT: VAR_START VAR_LIST . COLON TYPE SEMICOLON
+    6 STATEMENT: $@2 VAR_START . VAR_LIST COLON TYPE SEMICOLON
 
-    COLON  shift, and go to state 23
+    VAR  shift, and go to state 22
+
+    VAR_LIST  go to state 23
 
 
 State 19
 
-    9 STATEMENT: VAR $@3 . ASSIGNMENT $@4 A_EXPN SEMICOLON
+   10 STATEMENT: $@3 VAR . $@4 ASSIGNMENT $@5 A_EXPN SEMICOLON
 
-    ASSIGNMENT  shift, and go to state 24
+    $default  reduce using rule 8 ($@4)
+
+    $@4  go to state 24
 
 
 State 20
 
-   10 STATEMENT: READ LB . READ_VAR_LIST RB SEMICOLON
+   12 STATEMENT: $@6 READ . LB READ_VAR_LIST RB SEMICOLON
 
-    VAR  shift, and go to state 25
-
-    READ_VAR_LIST  go to state 26
+    LB  shift, and go to state 25
 
 
 State 21
 
-   11 STATEMENT: WRITE LB . WRITE_VAR_LIST RB SEMICOLON
+   14 STATEMENT: $@7 WRITE . LB WRITE_VAR_LIST RB SEMICOLON
 
-    VAR            shift, and go to state 27
-    QUOTED_STRING  shift, and go to state 28
-
-    WRITE_VAR_LIST  go to state 29
+    LB  shift, and go to state 26
 
 
 State 22
 
-   24 VAR_LIST: VAR $@8 . COMA VAR_LIST
+   28 VAR_LIST: VAR . $@11 COMA VAR_LIST
+   29         | VAR .
 
-    COMA  shift, and go to state 30
+    COLON     reduce using rule 29 (VAR_LIST)
+    $default  reduce using rule 27 ($@11)
+
+    $@11  go to state 27
 
 
 State 23
 
-    6 STATEMENT: VAR_START VAR_LIST COLON . TYPE SEMICOLON
+    6 STATEMENT: $@2 VAR_START VAR_LIST . COLON TYPE SEMICOLON
 
-    INT     shift, and go to state 31
-    CHAR    shift, and go to state 32
-    FLOAT   shift, and go to state 33
-    DOUBLE  shift, and go to state 34
-
-    TYPE  go to state 35
+    COLON  shift, and go to state 28
 
 
 State 24
 
-    9 STATEMENT: VAR $@3 ASSIGNMENT . $@4 A_EXPN SEMICOLON
+   10 STATEMENT: $@3 VAR $@4 . ASSIGNMENT $@5 A_EXPN SEMICOLON
 
-    $default  reduce using rule 8 ($@4)
-
-    $@4  go to state 36
+    ASSIGNMENT  shift, and go to state 29
 
 
 State 25
 
-   19 READ_VAR_LIST: VAR . $@7 COMA READ_VAR_LIST
-   20              | VAR .
+   12 STATEMENT: $@6 READ LB . READ_VAR_LIST RB SEMICOLON
 
-    RB        reduce using rule 20 (READ_VAR_LIST)
-    $default  reduce using rule 18 ($@7)
+    VAR  shift, and go to state 30
 
-    $@7  go to state 37
+    READ_VAR_LIST  go to state 31
 
 
 State 26
 
-   10 STATEMENT: READ LB READ_VAR_LIST . RB SEMICOLON
+   14 STATEMENT: $@7 WRITE LB . WRITE_VAR_LIST RB SEMICOLON
 
-    RB  shift, and go to state 38
+    VAR            shift, and go to state 32
+    QUOTED_STRING  shift, and go to state 33
+
+    WRITE_VAR_LIST  go to state 34
 
 
 State 27
 
-   15 WRITE_VAR_LIST: VAR . $@6 COMA WRITE_VAR_LIST
-   17               | VAR .
+   28 VAR_LIST: VAR $@11 . COMA VAR_LIST
 
-    RB        reduce using rule 17 (WRITE_VAR_LIST)
-    $default  reduce using rule 14 ($@6)
-
-    $@6  go to state 39
+    COMA  shift, and go to state 35
 
 
 State 28
 
-   13 WRITE_VAR_LIST: QUOTED_STRING . $@5 COMA WRITE_VAR_LIST
-   16               | QUOTED_STRING .
+    6 STATEMENT: $@2 VAR_START VAR_LIST COLON . TYPE SEMICOLON
 
-    RB        reduce using rule 16 (WRITE_VAR_LIST)
-    $default  reduce using rule 12 ($@5)
+    INT     shift, and go to state 36
+    CHAR    shift, and go to state 37
+    FLOAT   shift, and go to state 38
+    DOUBLE  shift, and go to state 39
 
-    $@5  go to state 40
+    TYPE  go to state 40
 
 
 State 29
 
-   11 STATEMENT: WRITE LB WRITE_VAR_LIST . RB SEMICOLON
+   10 STATEMENT: $@3 VAR $@4 ASSIGNMENT . $@5 A_EXPN SEMICOLON
 
-    RB  shift, and go to state 41
+    $default  reduce using rule 9 ($@5)
+
+    $@5  go to state 41
 
 
 State 30
 
-   24 VAR_LIST: VAR $@8 COMA . VAR_LIST
+   23 READ_VAR_LIST: VAR . $@10 COMA READ_VAR_LIST
+   24              | VAR .
 
-    VAR  shift, and go to state 17
+    RB        reduce using rule 24 (READ_VAR_LIST)
+    $default  reduce using rule 22 ($@10)
 
-    VAR_LIST  go to state 42
+    $@10  go to state 42
 
 
 State 31
 
-   26 TYPE: INT .
+   12 STATEMENT: $@6 READ LB READ_VAR_LIST . RB SEMICOLON
 
-    $default  reduce using rule 26 (TYPE)
+    RB  shift, and go to state 43
 
 
 State 32
 
-   27 TYPE: CHAR .
+   19 WRITE_VAR_LIST: VAR . $@9 COMA WRITE_VAR_LIST
+   21               | VAR .
 
-    $default  reduce using rule 27 (TYPE)
+    RB        reduce using rule 21 (WRITE_VAR_LIST)
+    $default  reduce using rule 18 ($@9)
+
+    $@9  go to state 44
 
 
 State 33
 
-   28 TYPE: FLOAT .
+   17 WRITE_VAR_LIST: QUOTED_STRING . $@8 COMA WRITE_VAR_LIST
+   20               | QUOTED_STRING .
 
-    $default  reduce using rule 28 (TYPE)
+    RB        reduce using rule 20 (WRITE_VAR_LIST)
+    $default  reduce using rule 16 ($@8)
+
+    $@8  go to state 45
 
 
 State 34
 
-   29 TYPE: DOUBLE .
+   14 STATEMENT: $@7 WRITE LB WRITE_VAR_LIST . RB SEMICOLON
 
-    $default  reduce using rule 29 (TYPE)
+    RB  shift, and go to state 46
 
 
 State 35
 
-    6 STATEMENT: VAR_START VAR_LIST COLON TYPE . SEMICOLON
+   28 VAR_LIST: VAR $@11 COMA . VAR_LIST
 
-    SEMICOLON  shift, and go to state 43
+    VAR  shift, and go to state 22
+
+    VAR_LIST  go to state 47
 
 
 State 36
 
-    9 STATEMENT: VAR $@3 ASSIGNMENT $@4 . A_EXPN SEMICOLON
+   30 TYPE: INT .
 
-    NUMBER  shift, and go to state 44
-    VAR     shift, and go to state 45
-
-    A_EXPN  go to state 46
+    $default  reduce using rule 30 (TYPE)
 
 
 State 37
 
-   19 READ_VAR_LIST: VAR $@7 . COMA READ_VAR_LIST
+   31 TYPE: CHAR .
 
-    COMA  shift, and go to state 47
+    $default  reduce using rule 31 (TYPE)
 
 
 State 38
 
-   10 STATEMENT: READ LB READ_VAR_LIST RB . SEMICOLON
+   32 TYPE: FLOAT .
 
-    SEMICOLON  shift, and go to state 48
+    $default  reduce using rule 32 (TYPE)
 
 
 State 39
 
-   15 WRITE_VAR_LIST: VAR $@6 . COMA WRITE_VAR_LIST
+   33 TYPE: DOUBLE .
 
-    COMA  shift, and go to state 49
+    $default  reduce using rule 33 (TYPE)
 
 
 State 40
 
-   13 WRITE_VAR_LIST: QUOTED_STRING $@5 . COMA WRITE_VAR_LIST
+    6 STATEMENT: $@2 VAR_START VAR_LIST COLON TYPE . SEMICOLON
 
-    COMA  shift, and go to state 50
+    SEMICOLON  shift, and go to state 48
 
 
 State 41
 
-   11 STATEMENT: WRITE LB WRITE_VAR_LIST RB . SEMICOLON
+   10 STATEMENT: $@3 VAR $@4 ASSIGNMENT $@5 . A_EXPN SEMICOLON
 
-    SEMICOLON  shift, and go to state 51
+    NUMBER  shift, and go to state 49
+    VAR     shift, and go to state 50
+
+    A_EXPN  go to state 51
 
 
 State 42
 
-   24 VAR_LIST: VAR $@8 COMA VAR_LIST .
+   23 READ_VAR_LIST: VAR $@10 . COMA READ_VAR_LIST
 
-    $default  reduce using rule 24 (VAR_LIST)
+    COMA  shift, and go to state 52
 
 
 State 43
 
-    6 STATEMENT: VAR_START VAR_LIST COLON TYPE SEMICOLON .
+   12 STATEMENT: $@6 READ LB READ_VAR_LIST RB . SEMICOLON
 
-    $default  reduce using rule 6 (STATEMENT)
+    SEMICOLON  shift, and go to state 53
 
 
 State 44
 
-   22 A_EXPN: NUMBER .
+   19 WRITE_VAR_LIST: VAR $@9 . COMA WRITE_VAR_LIST
 
-    $default  reduce using rule 22 (A_EXPN)
+    COMA  shift, and go to state 54
 
 
 State 45
 
-   21 A_EXPN: VAR .
+   17 WRITE_VAR_LIST: QUOTED_STRING $@8 . COMA WRITE_VAR_LIST
 
-    $default  reduce using rule 21 (A_EXPN)
+    COMA  shift, and go to state 55
 
 
 State 46
 
-    9 STATEMENT: VAR $@3 ASSIGNMENT $@4 A_EXPN . SEMICOLON
+   14 STATEMENT: $@7 WRITE LB WRITE_VAR_LIST RB . SEMICOLON
 
-    SEMICOLON  shift, and go to state 52
+    SEMICOLON  shift, and go to state 56
 
 
 State 47
 
-   19 READ_VAR_LIST: VAR $@7 COMA . READ_VAR_LIST
+   28 VAR_LIST: VAR $@11 COMA VAR_LIST .
 
-    VAR  shift, and go to state 25
-
-    READ_VAR_LIST  go to state 53
+    $default  reduce using rule 28 (VAR_LIST)
 
 
 State 48
 
-   10 STATEMENT: READ LB READ_VAR_LIST RB SEMICOLON .
+    6 STATEMENT: $@2 VAR_START VAR_LIST COLON TYPE SEMICOLON .
 
-    $default  reduce using rule 10 (STATEMENT)
+    $default  reduce using rule 6 (STATEMENT)
 
 
 State 49
 
-   15 WRITE_VAR_LIST: VAR $@6 COMA . WRITE_VAR_LIST
+   26 A_EXPN: NUMBER .
 
-    VAR            shift, and go to state 27
-    QUOTED_STRING  shift, and go to state 28
-
-    WRITE_VAR_LIST  go to state 54
+    $default  reduce using rule 26 (A_EXPN)
 
 
 State 50
 
-   13 WRITE_VAR_LIST: QUOTED_STRING $@5 COMA . WRITE_VAR_LIST
+   25 A_EXPN: VAR .
 
-    VAR            shift, and go to state 27
-    QUOTED_STRING  shift, and go to state 28
-
-    WRITE_VAR_LIST  go to state 55
+    $default  reduce using rule 25 (A_EXPN)
 
 
 State 51
 
-   11 STATEMENT: WRITE LB WRITE_VAR_LIST RB SEMICOLON .
+   10 STATEMENT: $@3 VAR $@4 ASSIGNMENT $@5 A_EXPN . SEMICOLON
 
-    $default  reduce using rule 11 (STATEMENT)
+    SEMICOLON  shift, and go to state 57
 
 
 State 52
 
-    9 STATEMENT: VAR $@3 ASSIGNMENT $@4 A_EXPN SEMICOLON .
+   23 READ_VAR_LIST: VAR $@10 COMA . READ_VAR_LIST
 
-    $default  reduce using rule 9 (STATEMENT)
+    VAR  shift, and go to state 30
+
+    READ_VAR_LIST  go to state 58
 
 
 State 53
 
-   19 READ_VAR_LIST: VAR $@7 COMA READ_VAR_LIST .
+   12 STATEMENT: $@6 READ LB READ_VAR_LIST RB SEMICOLON .
 
-    $default  reduce using rule 19 (READ_VAR_LIST)
+    $default  reduce using rule 12 (STATEMENT)
 
 
 State 54
 
-   15 WRITE_VAR_LIST: VAR $@6 COMA WRITE_VAR_LIST .
+   19 WRITE_VAR_LIST: VAR $@9 COMA . WRITE_VAR_LIST
 
-    $default  reduce using rule 15 (WRITE_VAR_LIST)
+    VAR            shift, and go to state 32
+    QUOTED_STRING  shift, and go to state 33
+
+    WRITE_VAR_LIST  go to state 59
 
 
 State 55
 
-   13 WRITE_VAR_LIST: QUOTED_STRING $@5 COMA WRITE_VAR_LIST .
+   17 WRITE_VAR_LIST: QUOTED_STRING $@8 COMA . WRITE_VAR_LIST
 
-    $default  reduce using rule 13 (WRITE_VAR_LIST)
+    VAR            shift, and go to state 32
+    QUOTED_STRING  shift, and go to state 33
+
+    WRITE_VAR_LIST  go to state 60
+
+
+State 56
+
+   14 STATEMENT: $@7 WRITE LB WRITE_VAR_LIST RB SEMICOLON .
+
+    $default  reduce using rule 14 (STATEMENT)
+
+
+State 57
+
+   10 STATEMENT: $@3 VAR $@4 ASSIGNMENT $@5 A_EXPN SEMICOLON .
+
+    $default  reduce using rule 10 (STATEMENT)
+
+
+State 58
+
+   23 READ_VAR_LIST: VAR $@10 COMA READ_VAR_LIST .
+
+    $default  reduce using rule 23 (READ_VAR_LIST)
+
+
+State 59
+
+   19 WRITE_VAR_LIST: VAR $@9 COMA WRITE_VAR_LIST .
+
+    $default  reduce using rule 19 (WRITE_VAR_LIST)
+
+
+State 60
+
+   17 WRITE_VAR_LIST: QUOTED_STRING $@8 COMA WRITE_VAR_LIST .
+
+    $default  reduce using rule 17 (WRITE_VAR_LIST)
