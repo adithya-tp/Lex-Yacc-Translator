@@ -1,0 +1,34 @@
+%option yylineno
+
+%{
+	#include<stdio.h>
+	#include<string.h>
+	#include"y.tab.h"
+	#include<math.h>
+%}
+%%
+
+"Procedure"							{return PROC;}
+"Main()"							{return MAIN;}
+"Begin"								{return BGIN;}
+":"									{return COLON;}
+"End"								{return END;}
+"var"								{return VAR_START;}
+"int"								{yylval.data_type=0; return INT;}
+"char"								{yylval.data_type=1; return CHAR;}
+"float"								{yylval.data_type=2; return FLOAT;}
+"double"							{yylval.data_type=3; return DOUBLE;}
+";"									{return SEMICOLON;}
+","									{return COMA;}
+":="								{return ASSIGNMENT;}
+[a-zA-Z]+							{strcpy(yylval.var_name, yytext);
+									 return VAR;}
+[0-9]+ 								{strcpy(yylval.var_name, yytext);
+									 return NUMBER;}
+[\n\t ]+							{/* ignoring newlines, tabs and spaces */}
+%%
+
+int yywrap(void) {
+	return 1;
+}
+

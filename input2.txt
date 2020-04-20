@@ -1,0 +1,7 @@
+Procedure Main()
+Begin:
+	var num:int;
+	var i,flag:int;
+	var c:char;
+	flag:=0;
+End:

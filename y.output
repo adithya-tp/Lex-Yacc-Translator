@@ -1,0 +1,354 @@
+Grammar
+
+    0 $accept: prm $end
+
+    1 $@1: %empty
+
+    2 prm: PROC MAIN BGIN COLON $@1 STATEMENTS END COLON
+
+    3 $@2: %empty
+
+    4 STATEMENTS: STATEMENTS $@2 STATEMENT
+    5           | %empty
+
+    6 STATEMENT: VAR_START VAR_LIST COLON TYPE SEMICOLON
+
+    7 $@3: %empty
+
+    8 $@4: %empty
+
+    9 STATEMENT: VAR $@3 ASSIGNMENT $@4 A_EXPN SEMICOLON
+
+   10 A_EXPN: VAR
+   11       | NUMBER
+
+   12 $@5: %empty
+
+   13 VAR_LIST: VAR $@5 COMA VAR_LIST
+   14         | VAR
+
+   15 TYPE: INT
+   16     | CHAR
+   17     | FLOAT
+   18     | DOUBLE
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+NUMBER (258) 11
+PROC (259) 2
+MAIN (260) 2
+BGIN (261) 2
+COLON (262) 2 6
+END (263) 2
+ASSIGNMENT (264) 9
+VAR_START (265) 6
+COMA (266) 13
+SEMICOLON (267) 6 9
+VAR (268) 9 10 13 14
+INT (269) 15
+CHAR (270) 16
+FLOAT (271) 17
+DOUBLE (272) 18
+
+
+Nonterminals, with rules where they appear
+
+$accept (18)
+    on left: 0
+prm (19)
+    on left: 2, on right: 0
+$@1 (20)
+    on left: 1, on right: 2
+STATEMENTS (21)
+    on left: 4 5, on right: 2 4
+$@2 (22)
+    on left: 3, on right: 4
+STATEMENT (23)
+    on left: 6 9, on right: 4
+$@3 (24)
+    on left: 7, on right: 9
+$@4 (25)
+    on left: 8, on right: 9
+A_EXPN (26)
+    on left: 10 11, on right: 9
+VAR_LIST (27)
+    on left: 13 14, on right: 6 13
+$@5 (28)
+    on left: 12, on right: 13
+TYPE (29)
+    on left: 15 16 17 18, on right: 6
+
+
+State 0
+
+    0 $accept: . prm $end
+
+    PROC  shift, and go to state 1
+
+    prm  go to state 2
+
+
+State 1
+
+    2 prm: PROC . MAIN BGIN COLON $@1 STATEMENTS END COLON
+
+    MAIN  shift, and go to state 3
+
+
+State 2
+
+    0 $accept: prm . $end
+
+    $end  shift, and go to state 4
+
+
+State 3
+
+    2 prm: PROC MAIN . BGIN COLON $@1 STATEMENTS END COLON
+
+    BGIN  shift, and go to state 5
+
+
+State 4
+
+    0 $accept: prm $end .
+
+    $default  accept
+
+
+State 5
+
+    2 prm: PROC MAIN BGIN . COLON $@1 STATEMENTS END COLON
+
+    COLON  shift, and go to state 6
+
+
+State 6
+
+    2 prm: PROC MAIN BGIN COLON . $@1 STATEMENTS END COLON
+
+    $default  reduce using rule 1 ($@1)
+
+    $@1  go to state 7
+
+
+State 7
+
+    2 prm: PROC MAIN BGIN COLON $@1 . STATEMENTS END COLON
+
+    $default  reduce using rule 5 (STATEMENTS)
+
+    STATEMENTS  go to state 8
+
+
+State 8
+
+    2 prm: PROC MAIN BGIN COLON $@1 STATEMENTS . END COLON
+    4 STATEMENTS: STATEMENTS . $@2 STATEMENT
+
+    END  shift, and go to state 9
+
+    $default  reduce using rule 3 ($@2)
+
+    $@2  go to state 10
+
+
+State 9
+
+    2 prm: PROC MAIN BGIN COLON $@1 STATEMENTS END . COLON
+
+    COLON  shift, and go to state 11
+
+
+State 10
+
+    4 STATEMENTS: STATEMENTS $@2 . STATEMENT
+
+    VAR_START  shift, and go to state 12
+    VAR        shift, and go to state 13
+
+    STATEMENT  go to state 14
+
+
+State 11
+
+    2 prm: PROC MAIN BGIN COLON $@1 STATEMENTS END COLON .
+
+    $default  reduce using rule 2 (prm)
+
+
+State 12
+
+    6 STATEMENT: VAR_START . VAR_LIST COLON TYPE SEMICOLON
+
+    VAR  shift, and go to state 15
+
+    VAR_LIST  go to state 16
+
+
+State 13
+
+    9 STATEMENT: VAR . $@3 ASSIGNMENT $@4 A_EXPN SEMICOLON
+
+    $default  reduce using rule 7 ($@3)
+
+    $@3  go to state 17
+
+
+State 14
+
+    4 STATEMENTS: STATEMENTS $@2 STATEMENT .
+
+    $default  reduce using rule 4 (STATEMENTS)
+
+
+State 15
+
+   13 VAR_LIST: VAR . $@5 COMA VAR_LIST
+   14         | VAR .
+
+    COLON     reduce using rule 14 (VAR_LIST)
+    $default  reduce using rule 12 ($@5)
+
+    $@5  go to state 18
+
+
+State 16
+
+    6 STATEMENT: VAR_START VAR_LIST . COLON TYPE SEMICOLON
+
+    COLON  shift, and go to state 19
+
+
+State 17
+
+    9 STATEMENT: VAR $@3 . ASSIGNMENT $@4 A_EXPN SEMICOLON
+
+    ASSIGNMENT  shift, and go to state 20
+
+
+State 18
+
+   13 VAR_LIST: VAR $@5 . COMA VAR_LIST
+
+    COMA  shift, and go to state 21
+
+
+State 19
+
+    6 STATEMENT: VAR_START VAR_LIST COLON . TYPE SEMICOLON
+
+    INT     shift, and go to state 22
+    CHAR    shift, and go to state 23
+    FLOAT   shift, and go to state 24
+    DOUBLE  shift, and go to state 25
+
+    TYPE  go to state 26
+
+
+State 20
+
+    9 STATEMENT: VAR $@3 ASSIGNMENT . $@4 A_EXPN SEMICOLON
+
+    $default  reduce using rule 8 ($@4)
+
+    $@4  go to state 27
+
+
+State 21
+
+   13 VAR_LIST: VAR $@5 COMA . VAR_LIST
+
+    VAR  shift, and go to state 15
+
+    VAR_LIST  go to state 28
+
+
+State 22
+
+   15 TYPE: INT .
+
+    $default  reduce using rule 15 (TYPE)
+
+
+State 23
+
+   16 TYPE: CHAR .
+
+    $default  reduce using rule 16 (TYPE)
+
+
+State 24
+
+   17 TYPE: FLOAT .
+
+    $default  reduce using rule 17 (TYPE)
+
+
+State 25
+
+   18 TYPE: DOUBLE .
+
+    $default  reduce using rule 18 (TYPE)
+
+
+State 26
+
+    6 STATEMENT: VAR_START VAR_LIST COLON TYPE . SEMICOLON
+
+    SEMICOLON  shift, and go to state 29
+
+
+State 27
+
+    9 STATEMENT: VAR $@3 ASSIGNMENT $@4 . A_EXPN SEMICOLON
+
+    NUMBER  shift, and go to state 30
+    VAR     shift, and go to state 31
+
+    A_EXPN  go to state 32
+
+
+State 28
+
+   13 VAR_LIST: VAR $@5 COMA VAR_LIST .
+
+    $default  reduce using rule 13 (VAR_LIST)
+
+
+State 29
+
+    6 STATEMENT: VAR_START VAR_LIST COLON TYPE SEMICOLON .
+
+    $default  reduce using rule 6 (STATEMENT)
+
+
+State 30
+
+   11 A_EXPN: NUMBER .
+
+    $default  reduce using rule 11 (A_EXPN)
+
+
+State 31
+
+   10 A_EXPN: VAR .
+
+    $default  reduce using rule 10 (A_EXPN)
+
+
+State 32
+
+    9 STATEMENT: VAR $@3 ASSIGNMENT $@4 A_EXPN . SEMICOLON
+
+    SEMICOLON  shift, and go to state 33
+
+
+State 33
+
+    9 STATEMENT: VAR $@3 ASSIGNMENT $@4 A_EXPN SEMICOLON .
+
+    $default  reduce using rule 9 (STATEMENT)
