@@ -22,9 +22,9 @@ int data_type;
 char var_name[30];
 }
 
-%token NUMBER PROC MAIN BGIN COLON END ASSIGNMENT VAR_START COMA SEMICOLON VAR READ LB RB WRITE QUOTED_STRING EXIT IF ELSE ENDIF GEQ LEQ GT LT NEQ DEQ NOT
+%token NUMBER PROC MAIN BGIN COLON END ASSIGNMENT VAR_START COMA SEMICOLON VAR READ LB RB WRITE QUOTED_STRING IF ELSE ENDIF GEQ LEQ GT LT NEQ DEQ NOT LAND LOR GOTO
 
-%left GEQ LEQ NOT GT LT NEQ DEQ
+%left LAND LOR GEQ LEQ NOT GT LT NEQ DEQ
 
 %token<data_type>INT
 %token<data_type>CHAR
@@ -155,7 +155,10 @@ STATEMENT: 			VAR_START VAR_LIST COLON TYPE SEMICOLON {
 					  {printf("\t");} STATEMENTS {printf("\t}\n");}
 					  ELSE {printf("\telse{\n");} 
 					  {printf("\t");} STATEMENTS ENDIF {printf("\t}\n");}
-					| EXIT COLON {printf("\b\b\b\b\b\b\b\bExit:\n");}
+					| GOTO {printf("goto ");} 
+    				  VAR {printf("%s", yylval.var_name);} 
+					  SEMICOLON {printf(";\n");}
+					| VAR COLON {printf("\b\b\b\b\b\b\b\b%s:\n", yylval.var_name);}
 
 VAR_LIST: 			VAR {
 						strcpy(var_list[idx], $1); 
@@ -185,13 +188,15 @@ TYPE : 				INT {
 					}
 
 
-L_EXPN:				L_EXPN LEQ {printf("<=");} L_EXPN
+L_EXPN:				L_EXPN LAND {printf("&&");} L_EXPN
+					| L_EXPN LOR {printf("||");} L_EXPN
+	 				| L_EXPN LEQ {printf("<=");} L_EXPN
 					| L_EXPN GT {printf(">");} L_EXPN
 					| L_EXPN LT {printf("<");} L_EXPN
 					| L_EXPN NEQ {printf("!=");} L_EXPN
 					| L_EXPN DEQ {printf("==");} L_EXPN
 					| NOT {printf("!");} L_EXPN 
-					| A_EXPN {/*need to change this to TERMINALS later on*/}
+					| TERMINALS {/*need to change this to TERMINALS later on*/}
 
 WRITE_VAR_LIST:		QUOTED_STRING {
 						strcpy(var_list[idx], yylval.var_name); 

@@ -12,7 +12,6 @@
 "Main()"							{return MAIN;}
 "Begin"								{return BGIN;}
 ":"									{return COLON;}
-"Exit"								{return EXIT;}
 "End"								{return END;}
 "var"								{return VAR_START;}
 "int"								{yylval.data_type=0; return INT;}
@@ -24,11 +23,14 @@
 "If"								{return IF;}
 "Else"								{return ELSE;}
 "EndIf"								{return ENDIF;}
+"goto"								{return GOTO;}
 "("									{return LB;}
 ")"									{return RB;}
 ";"									{return SEMICOLON;}
 ","									{return COMA;}
 ":="								{return ASSIGNMENT;}
+"&&"								{return LAND;}
+"||"								{return LOR;}
 ">="								{return GEQ;}
 "<="								{return LEQ;}
 ">"									{return GT;}

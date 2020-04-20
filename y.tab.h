@@ -61,21 +61,23 @@ extern int yydebug;
     RB = 271,
     WRITE = 272,
     QUOTED_STRING = 273,
-    EXIT = 274,
-    IF = 275,
-    ELSE = 276,
-    ENDIF = 277,
-    GEQ = 278,
-    LEQ = 279,
-    GT = 280,
-    LT = 281,
-    NEQ = 282,
-    DEQ = 283,
-    NOT = 284,
-    INT = 285,
-    CHAR = 286,
-    FLOAT = 287,
-    DOUBLE = 288
+    IF = 274,
+    ELSE = 275,
+    ENDIF = 276,
+    GEQ = 277,
+    LEQ = 278,
+    GT = 279,
+    LT = 280,
+    NEQ = 281,
+    DEQ = 282,
+    NOT = 283,
+    LAND = 284,
+    LOR = 285,
+    GOTO = 286,
+    INT = 287,
+    CHAR = 288,
+    FLOAT = 289,
+    DOUBLE = 290
   };
 #endif
 /* Tokens.  */
@@ -95,21 +97,23 @@ extern int yydebug;
 #define RB 271
 #define WRITE 272
 #define QUOTED_STRING 273
-#define EXIT 274
-#define IF 275
-#define ELSE 276
-#define ENDIF 277
-#define GEQ 278
-#define LEQ 279
-#define GT 280
-#define LT 281
-#define NEQ 282
-#define DEQ 283
-#define NOT 284
-#define INT 285
-#define CHAR 286
-#define FLOAT 287
-#define DOUBLE 288
+#define IF 274
+#define ELSE 275
+#define ENDIF 276
+#define GEQ 277
+#define LEQ 278
+#define GT 279
+#define LT 280
+#define NEQ 281
+#define DEQ 282
+#define NOT 283
+#define LAND 284
+#define LOR 285
+#define GOTO 286
+#define INT 287
+#define CHAR 288
+#define FLOAT 289
+#define DOUBLE 290
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -121,7 +125,7 @@ union YYSTYPE
 int data_type;
 char var_name[30];
 
-#line 125 "y.tab.h" /* yacc.c:1909  */
+#line 129 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

@@ -5,6 +5,7 @@ Begin:
 	flag:=0;
 	Write('Enter the value to be checked');
 	Read(num);
+	goto Exit;
 Exit:
 	If(flag==1)
 		Write('The value ',num,' is not prime');
