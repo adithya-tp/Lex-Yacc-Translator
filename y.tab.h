@@ -62,10 +62,20 @@ extern int yydebug;
     WRITE = 272,
     QUOTED_STRING = 273,
     EXIT = 274,
-    INT = 275,
-    CHAR = 276,
-    FLOAT = 277,
-    DOUBLE = 278
+    IF = 275,
+    ELSE = 276,
+    ENDIF = 277,
+    GEQ = 278,
+    LEQ = 279,
+    GT = 280,
+    LT = 281,
+    NEQ = 282,
+    DEQ = 283,
+    NOT = 284,
+    INT = 285,
+    CHAR = 286,
+    FLOAT = 287,
+    DOUBLE = 288
   };
 #endif
 /* Tokens.  */
@@ -86,10 +96,20 @@ extern int yydebug;
 #define WRITE 272
 #define QUOTED_STRING 273
 #define EXIT 274
-#define INT 275
-#define CHAR 276
-#define FLOAT 277
-#define DOUBLE 278
+#define IF 275
+#define ELSE 276
+#define ENDIF 277
+#define GEQ 278
+#define LEQ 279
+#define GT 280
+#define LT 281
+#define NEQ 282
+#define DEQ 283
+#define NOT 284
+#define INT 285
+#define CHAR 286
+#define FLOAT 287
+#define DOUBLE 288
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -101,7 +121,7 @@ union YYSTYPE
 int data_type;
 char var_name[30];
 
-#line 105 "y.tab.h" /* yacc.c:1909  */
+#line 125 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

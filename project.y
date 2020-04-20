@@ -22,7 +22,9 @@ int data_type;
 char var_name[30];
 }
 
-%token NUMBER PROC MAIN BGIN COLON END ASSIGNMENT VAR_START COMA SEMICOLON VAR READ LB RB WRITE QUOTED_STRING EXIT
+%token NUMBER PROC MAIN BGIN COLON END ASSIGNMENT VAR_START COMA SEMICOLON VAR READ LB RB WRITE QUOTED_STRING EXIT IF ELSE ENDIF GEQ LEQ GT LT NEQ DEQ NOT
+
+%left GEQ LEQ NOT GT LT NEQ DEQ
 
 %token<data_type>INT
 %token<data_type>CHAR
@@ -42,10 +44,10 @@ prm:	 			PROC MAIN BGIN COLON{
 						printf("}\n");
 					}
 
-STATEMENTS: 		STATEMENTS STATEMENT
+STATEMENTS: 		STATEMENTS {printf("\t");} STATEMENT
 					| ;
 
-STATEMENT: 			{printf("\t");} VAR_START VAR_LIST COLON TYPE SEMICOLON {
+STATEMENT: 			VAR_START VAR_LIST COLON TYPE SEMICOLON {
 						if(current_data_type == 0)
 							printf("int ");
 						else if(current_data_type == 1)
@@ -62,7 +64,7 @@ STATEMENT: 			{printf("\t");} VAR_START VAR_LIST COLON TYPE SEMICOLON {
 						printf("%s;\n", var_list[idx - 1]);
 						idx = 0;
 					}
-					| {printf("\t");} VAR {
+					| VAR {
 							printf("%s", yylval.var_name);
 							if((temp=lookup_in_table(yylval.var_name))!=-1) {
 								if(expn_type==-1)
@@ -83,7 +85,7 @@ STATEMENT: 			{printf("\t");} VAR_START VAR_LIST COLON TYPE SEMICOLON {
 					ASSIGNMENT {printf("=");} A_EXPN SEMICOLON {
 						printf(";\n");
 					}
-					| {printf("\t");} READ LB READ_VAR_LIST RB SEMICOLON {
+					| READ LB READ_VAR_LIST RB SEMICOLON {
 						printf("scanf(\"");
 						for(int i = 0; i < idx; i++) {
 							if((temp=lookup_in_table(var_list[i])) != -1) {
@@ -111,7 +113,7 @@ STATEMENT: 			{printf("\t");} VAR_START VAR_LIST COLON TYPE SEMICOLON {
 						idx=0;
 					}
 
-					| {printf("\t");} WRITE LB WRITE_VAR_LIST RB SEMICOLON {
+					| WRITE LB WRITE_VAR_LIST RB SEMICOLON {
 						char *s;
 						printf("printf(\"");
 						for(int i = 0; i < idx; i++) {
@@ -148,8 +150,48 @@ STATEMENT: 			{printf("\t");} VAR_START VAR_LIST COLON TYPE SEMICOLON {
 						printf(");\n");
 						idx = 0;
 					}
-					| EXIT COLON {printf("Exit:\n");}
-								
+					| IF LB {printf("if(");} 
+					  L_EXPN RB {printf("){\n");} 
+					  {printf("\t");} STATEMENTS {printf("\t}\n");}
+					  ELSE {printf("\telse{\n");} 
+					  {printf("\t");} STATEMENTS ENDIF {printf("\t}\n");}
+					| EXIT COLON {printf("\b\b\b\b\b\b\b\bExit:\n");}
+
+VAR_LIST: 			VAR {
+						strcpy(var_list[idx], $1); 
+						idx++;
+					} COMA VAR_LIST
+					| VAR {
+						strcpy(var_list[idx], $1); 
+						idx++;
+					}
+
+
+TYPE : 				INT {
+						$$=$1;
+						current_data_type=$1;	
+					}
+					| CHAR  {
+						$$=$1;
+						current_data_type=$1;
+					}
+					| FLOAT {
+						$$=$1;
+						current_data_type=$1;
+					}
+					| DOUBLE {
+						$$=$1;
+						current_data_type=$1; 
+					}
+
+
+L_EXPN:				L_EXPN LEQ {printf("<=");} L_EXPN
+					| L_EXPN GT {printf(">");} L_EXPN
+					| L_EXPN LT {printf("<");} L_EXPN
+					| L_EXPN NEQ {printf("!=");} L_EXPN
+					| L_EXPN DEQ {printf("==");} L_EXPN
+					| NOT {printf("!");} L_EXPN 
+					| A_EXPN {/*need to change this to TERMINALS later on*/}
 
 WRITE_VAR_LIST:		QUOTED_STRING {
 						strcpy(var_list[idx], yylval.var_name); 
@@ -179,52 +221,28 @@ READ_VAR_LIST:		VAR {
 						idx++;
 					}
 
-A_EXPN : 			VAR {
-						if((temp=lookup_in_table($1))!=-1) {
-							if(expn_type==-1) {
+A_EXPN: 			TERMINALS
+
+TERMINALS:			VAR {
+						if((temp=lookup_in_table(yylval.var_name))!=-1) {
+							if(expn_type==-1){
 								printf("%s", yylval.var_name);
 								expn_type=temp;
 							}
-							else if(expn_type!=temp) {
+							else if(expn_type!=temp){
 								printf("\ntype mismatch in the expression\n");
 								yyerror("");
 								exit(0);
 							}
 						}
-						else {
-							printf("\n variable \"%s\" undeclared\n",$1);
+						else{
+							printf("\n variable \"%s\" undeclared\n", yylval.var_name);
 							yyerror("");
 							exit(0);
-						}	
-		 			}
+						}
+					}
 					| NUMBER {printf("%s", yylval.var_name);}
 
-VAR_LIST: 			VAR {
-						strcpy(var_list[idx], $1); 
-						idx++;
-					} COMA VAR_LIST
-					| VAR {
-						strcpy(var_list[idx], $1); 
-						idx++;
-					}
-
-
-TYPE : 				INT {
-						$$=$1;
-						current_data_type=$1;	
-					}
-					| CHAR  {
-						$$=$1;
-						current_data_type=$1;
-					}
-					| FLOAT {
-						$$=$1;
-						current_data_type=$1;
-					}
-					| DOUBLE {
-						$$=$1;
-						current_data_type=$1; 
-					}
 
 %%
 

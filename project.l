@@ -21,11 +21,21 @@
 "double"							{yylval.data_type=3; return DOUBLE;}
 "Read"								{return READ;}
 "Write"								{return WRITE;}
+"If"								{return IF;}
+"Else"								{return ELSE;}
+"EndIf"								{return ENDIF;}
 "("									{return LB;}
 ")"									{return RB;}
 ";"									{return SEMICOLON;}
 ","									{return COMA;}
 ":="								{return ASSIGNMENT;}
+">="								{return GEQ;}
+"<="								{return LEQ;}
+">"									{return GT;}
+"<"									{return LT;}
+"!="								{return NEQ;}
+"=="								{return DEQ;}
+"!"									{return NOT;}
 '[^'"]*'							{strcpy(yylval.var_name, yytext);
 									 return QUOTED_STRING;}
 [a-zA-Z]+							{strcpy(yylval.var_name, yytext);
