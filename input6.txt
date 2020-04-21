@@ -11,6 +11,8 @@ Exit:
 		Write('The value ',num,' is not prime');
 	ElseIf(flag==2)
 		Write('The value ',num,' is maybe prime');
+	ElseIf(flag==3)
+		Write('The value ',num,' is definitely prime');
 	Else
 		Write('The value ',num,' is prime');
 	EndIf

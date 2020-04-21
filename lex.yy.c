@@ -385,12 +385,12 @@ static const flex_int16_t yy_accept[99] =
        21,   34,    4,   20,   28,   36,   27,   33,   33,   33,
        33,   33,   33,   33,   33,   33,   33,   33,   33,   33,
        33,   36,   35,   29,   23,    0,   32,   34,   22,   26,
-       30,   25,   33,   33,   33,   33,   13,   33,   33,   33,
+       30,   25,   33,   33,   33,   33,   14,   33,   33,   33,
        33,   33,   33,   33,   33,   33,   33,   24,   33,   33,
         5,   33,   33,   33,   33,   33,   33,   33,   33,    7,
-        6,   33,   14,   33,   33,   33,   11,   33,    8,   33,
-       33,   17,    3,   33,   15,    0,   33,   12,   33,    9,
-       16,    2,   33,   10,   33,   33,    1,    0
+        6,   33,   15,   33,   33,   33,   11,   33,    8,   33,
+       33,   17,    3,   33,   16,    0,   33,   12,   33,    9,
+       13,    2,   33,   10,   33,   33,    1,    0
 
     } ;
 
@@ -884,22 +884,22 @@ YY_RULE_SETUP
 case 13:
 YY_RULE_SETUP
 #line 23 "project.l"
-{return IF;}
+{return ELSEIF;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 24 "project.l"
-{return ELSE;}
+{return IF;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 25 "project.l"
-{return ENDIF;}
+{return ELSE;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 26 "project.l"
-{return ELSEIF;}
+{return ENDIF;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP

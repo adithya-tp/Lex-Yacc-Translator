@@ -150,10 +150,8 @@ STATEMENT: 			VAR_START VAR_LIST COLON TYPE SEMICOLON {
 						printf(");\n");
 						idx = 0;
 					}
-					| IF_BLOCK
-					  {printf("\t");} ELSEIF_BLOCKS
-					  {printf("\t}\n");} ELSE_BLOCK
-					  ENDIF {printf("\t}\n");}
+					| IF_BLOCK ELSEIF_BLOCKS ELSE_BLOCK ENDIF
+					| IF_BLOCK ENDIF
 					| GOTO {printf("goto ");} 
     				  VAR {printf("%s", yylval.var_name);} 
 					  SEMICOLON {printf(";\n");}
@@ -162,20 +160,21 @@ STATEMENT: 			VAR_START VAR_LIST COLON TYPE SEMICOLON {
 IF_BLOCK:		 	IF LB {printf("if(");} 
 					L_EXPN RB {printf("){\n");} 
 					{printf("\t");} STATEMENTS
+					{printf("\t}\n");}
 					  	
 
-ELSEIF_BLOCKS:		ELSEIF_BLOCK ELSEIF_BLOCKS
-					| ELSEIF_BLOCK
+ELSEIF_BLOCKS:		ELSEIF_BLOCKS ELSEIF_BLOCK
+					| ;
 
 
-ELSEIF_BLOCK:		ELSEIF LB {printf("else if(");}
+ELSEIF_BLOCK:		{printf("\t");} ELSEIF LB {printf("else if(");}
 					L_EXPN RB {printf("){\n");}
 					{printf("\t");} STATEMENTS
-					| ;
+					{printf("\t}\n");}
 
 ELSE_BLOCK: 	    ELSE {printf("\telse{\n");} 
 					{printf("\t");} STATEMENTS
-					| ;
+					{printf("\t}\n");}
 				
 VAR_LIST: 			VAR {
 						strcpy(var_list[idx], $1); 

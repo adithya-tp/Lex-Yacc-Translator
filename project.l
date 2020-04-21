@@ -20,10 +20,10 @@
 "double"							{yylval.data_type=3; return DOUBLE;}
 "Read"								{return READ;}
 "Write"								{return WRITE;}
+"ElseIf"							{return ELSEIF;}
 "If"								{return IF;}
 "Else"								{return ELSE;}
 "EndIf"								{return ENDIF;}
-"ElseIf"							{return ELSEIF;}
 "goto"								{return GOTO;}
 "("									{return LB;}
 ")"									{return RB;}
