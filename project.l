@@ -25,6 +25,11 @@
 "Else"								{return ELSE;}
 "EndIf"								{return ENDIF;}
 "goto"								{return GOTO;}
+"For"								{return FOR;}
+"To"								{return TO;}
+"Do"								{return DO;}
+"EndFor"							{return ENDFOR;}
+"<-"								{return ARROW_ASSIGNMENT;}
 "("									{return LB;}
 ")"									{return RB;}
 ";"									{return SEMICOLON;}
@@ -38,6 +43,11 @@
 "<"									{return LT;}
 "!="								{return NEQ;}
 "=="								{return DEQ;}
+"+"									{return PLUS;}
+"-"									{return MINUS;}
+"*"									{return MUL;}
+"/"									{return DIV;}
+"%"									{return MOD;}
 "!"									{return NOT;}
 '[^'"]*'							{strcpy(yylval.var_name, yytext);
 									 return QUOTED_STRING;}

@@ -10,6 +10,8 @@
 	int temp;
 	int idx = 0;
 	int table_idx = 0;
+	int tab_count = 0;
+	char for_var[30];
 	struct symbol_table{char var_name[30]; int type;} sym[20];
 	extern int lookup_in_table(char var[30]);
 	extern void insert_to_table(char var[30], int type);
@@ -22,9 +24,9 @@ int data_type;
 char var_name[30];
 }
 
-%token NUMBER PROC MAIN BGIN COLON END ASSIGNMENT VAR_START COMA SEMICOLON VAR READ LB RB WRITE QUOTED_STRING IF ELSE ENDIF GEQ LEQ GT LT NEQ DEQ NOT LAND LOR GOTO ELSEIF
+%token NUMBER PROC MAIN BGIN COLON END ASSIGNMENT VAR_START COMA SEMICOLON VAR READ LB RB WRITE QUOTED_STRING IF ELSE ENDIF GEQ LEQ GT LT NEQ DEQ NOT LAND LOR GOTO ELSEIF FOR TO DO ENDFOR ARROW_ASSIGNMENT PLUS MINUS MUL DIV MOD
 
-%left LAND LOR GEQ LEQ NOT GT LT NEQ DEQ
+%left LAND LOR GEQ LEQ NOT GT LT NEQ DEQ PLUS MINUS MUL DIV MOD
 
 %token<data_type>INT
 %token<data_type>CHAR
@@ -39,12 +41,13 @@ char var_name[30];
 
 prm:	 			PROC MAIN BGIN COLON{
 						printf("#include<stdio.h>\nint main()\n{\n");
+						tab_count++;
 					}
 					STATEMENTS END COLON{
 						printf("}\n");
 					}
 
-STATEMENTS: 		STATEMENTS {printf("\t");} STATEMENT
+STATEMENTS: 		STATEMENTS {print_tabs();} STATEMENT
 					| ;
 
 STATEMENT: 			VAR_START VAR_LIST COLON TYPE SEMICOLON {
@@ -155,26 +158,34 @@ STATEMENT: 			VAR_START VAR_LIST COLON TYPE SEMICOLON {
 					| GOTO {printf("goto ");} 
     				  VAR {printf("%s", yylval.var_name);} 
 					  SEMICOLON {printf(";\n");}
+					| FOR LB {printf("for(");} 
+					  VAR {strcpy(for_var, yylval.var_name); printf("%s", for_var);} 
+					  ARROW_ASSIGNMENT {printf("=");}
+					  TERMINALS {printf("; %s", for_var);} 
+					  TO {printf("<=");} 
+					  A_EXPN {printf("; %s++", for_var);} 
+					  RB DO {printf("){\n"); tab_count++;} 
+					  STATEMENTS ENDFOR {tab_count--;printf("\t");printf("}\n");}
 					| VAR COLON {printf("\b\b\b\b\b\b\b\b%s:\n", yylval.var_name);}
 
 IF_BLOCK:		 	IF LB {printf("if(");} 
-					L_EXPN RB {printf("){\n");} 
-					{printf("\t");} STATEMENTS
-					{printf("\t}\n");}
+					L_EXPN RB {printf("){\n");tab_count++;} 
+					STATEMENTS
+					{tab_count--;print_tabs();printf("}\n");}
 					  	
 
 ELSEIF_BLOCKS:		ELSEIF_BLOCKS ELSEIF_BLOCK
 					| ;
 
 
-ELSEIF_BLOCK:		{printf("\t");} ELSEIF LB {printf("else if(");}
-					L_EXPN RB {printf("){\n");}
-					{printf("\t");} STATEMENTS
-					{printf("\t}\n");}
+ELSEIF_BLOCK:		ELSEIF LB {print_tabs();printf("else if(");}
+					L_EXPN RB {printf("){\n");tab_count++;}
+					STATEMENTS
+					{tab_count--;print_tabs();printf("}\n");}
 
-ELSE_BLOCK: 	    ELSE {printf("\telse{\n");} 
-					{printf("\t");} STATEMENTS
-					{printf("\t}\n");}
+ELSE_BLOCK: 	    ELSE {print_tabs();printf("else{\n");tab_count++;} 
+					STATEMENTS
+					{tab_count--;print_tabs();printf("}\n");}
 				
 VAR_LIST: 			VAR {
 						strcpy(var_list[idx], $1); 
@@ -242,7 +253,12 @@ READ_VAR_LIST:		VAR {
 						idx++;
 					}
 
-A_EXPN: 			TERMINALS
+A_EXPN: 		A_EXPN PLUS {printf("+");} A_EXPN
+				| A_EXPN MINUS {printf("-");} A_EXPN
+				| A_EXPN MUL {printf("*");} A_EXPN
+				| A_EXPN DIV {printf("/");} A_EXPN
+				| A_EXPN MOD {printf("%%");} A_EXPN	
+				| TERMINALS
 
 TERMINALS:			VAR {
 						if((temp=lookup_in_table(yylval.var_name))!=-1) {
@@ -290,6 +306,13 @@ void insert_to_table(char var[30], int type)
 		yyerror("");
 		exit(0);
 	}
+}
+
+void print_tabs() {
+	for(int i = 0; i < tab_count; i++){
+		printf("\t");
+	}
+	return;
 }
 
 int main() {

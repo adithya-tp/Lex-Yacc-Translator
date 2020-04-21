@@ -75,10 +75,20 @@ extern int yydebug;
     LOR = 285,
     GOTO = 286,
     ELSEIF = 287,
-    INT = 288,
-    CHAR = 289,
-    FLOAT = 290,
-    DOUBLE = 291
+    FOR = 288,
+    TO = 289,
+    DO = 290,
+    ENDFOR = 291,
+    ARROW_ASSIGNMENT = 292,
+    PLUS = 293,
+    MINUS = 294,
+    MUL = 295,
+    DIV = 296,
+    MOD = 297,
+    INT = 298,
+    CHAR = 299,
+    FLOAT = 300,
+    DOUBLE = 301
   };
 #endif
 /* Tokens.  */
@@ -112,22 +122,32 @@ extern int yydebug;
 #define LOR 285
 #define GOTO 286
 #define ELSEIF 287
-#define INT 288
-#define CHAR 289
-#define FLOAT 290
-#define DOUBLE 291
+#define FOR 288
+#define TO 289
+#define DO 290
+#define ENDFOR 291
+#define ARROW_ASSIGNMENT 292
+#define PLUS 293
+#define MINUS 294
+#define MUL 295
+#define DIV 296
+#define MOD 297
+#define INT 298
+#define CHAR 299
+#define FLOAT 300
+#define DOUBLE 301
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 20 "project.y" /* yacc.c:1909  */
+#line 22 "project.y" /* yacc.c:1909  */
 
 int data_type;
 char var_name[30];
 
-#line 131 "y.tab.h" /* yacc.c:1909  */
+#line 151 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
