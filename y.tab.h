@@ -142,7 +142,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 22 "project.y" /* yacc.c:1909  */
+#line 23 "project.y" /* yacc.c:1909  */
 
 int data_type;
 char var_name[30];

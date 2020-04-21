@@ -15,6 +15,7 @@
 	struct symbol_table{char var_name[30]; int type;} sym[20];
 	extern int lookup_in_table(char var[30]);
 	extern void insert_to_table(char var[30], int type);
+	extern void print_tabs();
 	char var_list[20][30];	//20 variable names with each variable being atmost 50 characters long
 	int string_or_var[20];
 	extern int *yytext;
@@ -169,7 +170,7 @@ STATEMENT: 			VAR_START VAR_LIST COLON TYPE SEMICOLON {
 					| VAR COLON {printf("\b\b\b\b\b\b\b\b%s:\n", yylval.var_name);}
 
 IF_BLOCK:		 	IF LB {printf("if(");} 
-					L_EXPN RB {printf("){\n");tab_count++;} 
+					A_EXPN RB {printf("){\n");tab_count++;} 
 					STATEMENTS
 					{tab_count--;print_tabs();printf("}\n");}
 					  	
@@ -179,7 +180,7 @@ ELSEIF_BLOCKS:		ELSEIF_BLOCKS ELSEIF_BLOCK
 
 
 ELSEIF_BLOCK:		ELSEIF LB {print_tabs();printf("else if(");}
-					L_EXPN RB {printf("){\n");tab_count++;}
+					A_EXPN RB {printf("){\n");tab_count++;}
 					STATEMENTS
 					{tab_count--;print_tabs();printf("}\n");}
 
@@ -214,17 +215,6 @@ TYPE : 				INT {
 						current_data_type=$1; 
 					}
 
-
-L_EXPN:				L_EXPN LAND {printf("&&");} L_EXPN
-					| L_EXPN LOR {printf("||");} L_EXPN
-	 				| L_EXPN LEQ {printf("<=");} L_EXPN
-					| L_EXPN GT {printf(">");} L_EXPN
-					| L_EXPN LT {printf("<");} L_EXPN
-					| L_EXPN NEQ {printf("!=");} L_EXPN
-					| L_EXPN DEQ {printf("==");} L_EXPN
-					| NOT {printf("!");} L_EXPN 
-					| TERMINALS
-
 WRITE_VAR_LIST:		QUOTED_STRING {
 						strcpy(var_list[idx], yylval.var_name); 
 						string_or_var[idx]=1; 
@@ -253,7 +243,15 @@ READ_VAR_LIST:		VAR {
 						idx++;
 					}
 
-A_EXPN: 		A_EXPN PLUS {printf("+");} A_EXPN
+A_EXPN: 		A_EXPN LAND {printf("&&");} A_EXPN
+				| A_EXPN LOR {printf("||");} A_EXPN
+	 			| A_EXPN LEQ {printf("<=");} A_EXPN
+				| A_EXPN GT {printf(">");} A_EXPN
+				| A_EXPN LT {printf("<");} A_EXPN
+				| A_EXPN NEQ {printf("!=");} A_EXPN
+				| A_EXPN DEQ {printf("==");} A_EXPN
+				| NOT {printf("!");} A_EXPN 
+				| A_EXPN PLUS {printf("+");} A_EXPN
 				| A_EXPN MINUS {printf("-");} A_EXPN
 				| A_EXPN MUL {printf("*");} A_EXPN
 				| A_EXPN DIV {printf("/");} A_EXPN

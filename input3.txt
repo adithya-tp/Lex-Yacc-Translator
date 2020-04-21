@@ -1,9 +1,0 @@
-Procedure Main()
-Begin:
-	var c:char;
-	var num:int;
-	var i,flag:int;
-	flag:=0;
-	Read(c,flag);
-	c:=flag;
-End:
