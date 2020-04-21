@@ -3,6 +3,10 @@ Terminals unused in grammar
    GEQ
 
 
+State 28 conflicts: 1 shift/reduce
+State 41 conflicts: 1 shift/reduce, 2 reduce/reduce
+
+
 Grammar
 
     0 $accept: prm $end
@@ -30,199 +34,235 @@ Grammar
 
    13 $@6: %empty
 
-   14 $@7: %empty
+   14 STATEMENT: IF_BLOCK $@5 ELSEIF_BLOCKS $@6 ELSE_BLOCK ENDIF
 
-   15 $@8: %empty
+   15 $@7: %empty
 
-   16 $@9: %empty
+   16 $@8: %empty
 
-   17 $@10: %empty
+   17 STATEMENT: GOTO $@7 VAR $@8 SEMICOLON
+   18          | VAR COLON
 
-   18 STATEMENT: IF LB $@5 L_EXPN RB $@6 $@7 STATEMENTS $@8 ELSE $@9 $@10 STATEMENTS ENDIF
+   19 $@9: %empty
 
-   19 $@11: %empty
+   20 $@10: %empty
 
-   20 $@12: %empty
+   21 $@11: %empty
 
-   21 STATEMENT: GOTO $@11 VAR $@12 SEMICOLON
-   22          | VAR COLON
+   22 IF_BLOCK: IF LB $@9 L_EXPN RB $@10 $@11 STATEMENTS
 
-   23 $@13: %empty
+   23 ELSEIF_BLOCKS: ELSEIF_BLOCK ELSEIF_BLOCKS
+   24              | ELSEIF_BLOCK
 
-   24 VAR_LIST: VAR $@13 COMA VAR_LIST
-   25         | VAR
+   25 $@12: %empty
 
-   26 TYPE: INT
-   27     | CHAR
-   28     | FLOAT
-   29     | DOUBLE
+   26 $@13: %empty
 
-   30 $@14: %empty
+   27 $@14: %empty
 
-   31 L_EXPN: L_EXPN LAND $@14 L_EXPN
+   28 ELSEIF_BLOCK: ELSEIF LB $@12 L_EXPN RB $@13 $@14 STATEMENTS
+   29             | %empty
 
-   32 $@15: %empty
+   30 $@15: %empty
 
-   33 L_EXPN: L_EXPN LOR $@15 L_EXPN
+   31 $@16: %empty
 
-   34 $@16: %empty
+   32 ELSE_BLOCK: ELSE $@15 $@16 STATEMENTS
+   33           | %empty
 
-   35 L_EXPN: L_EXPN LEQ $@16 L_EXPN
+   34 $@17: %empty
 
-   36 $@17: %empty
+   35 VAR_LIST: VAR $@17 COMA VAR_LIST
+   36         | VAR
 
-   37 L_EXPN: L_EXPN GT $@17 L_EXPN
+   37 TYPE: INT
+   38     | CHAR
+   39     | FLOAT
+   40     | DOUBLE
 
-   38 $@18: %empty
+   41 $@18: %empty
 
-   39 L_EXPN: L_EXPN LT $@18 L_EXPN
+   42 L_EXPN: L_EXPN LAND $@18 L_EXPN
 
-   40 $@19: %empty
+   43 $@19: %empty
 
-   41 L_EXPN: L_EXPN NEQ $@19 L_EXPN
+   44 L_EXPN: L_EXPN LOR $@19 L_EXPN
 
-   42 $@20: %empty
+   45 $@20: %empty
 
-   43 L_EXPN: L_EXPN DEQ $@20 L_EXPN
+   46 L_EXPN: L_EXPN LEQ $@20 L_EXPN
 
-   44 $@21: %empty
+   47 $@21: %empty
 
-   45 L_EXPN: NOT $@21 L_EXPN
-   46       | TERMINALS
+   48 L_EXPN: L_EXPN GT $@21 L_EXPN
 
-   47 $@22: %empty
+   49 $@22: %empty
 
-   48 WRITE_VAR_LIST: QUOTED_STRING $@22 COMA WRITE_VAR_LIST
+   50 L_EXPN: L_EXPN LT $@22 L_EXPN
 
-   49 $@23: %empty
+   51 $@23: %empty
 
-   50 WRITE_VAR_LIST: VAR $@23 COMA WRITE_VAR_LIST
-   51               | QUOTED_STRING
-   52               | VAR
+   52 L_EXPN: L_EXPN NEQ $@23 L_EXPN
 
    53 $@24: %empty
 
-   54 READ_VAR_LIST: VAR $@24 COMA READ_VAR_LIST
-   55              | VAR
+   54 L_EXPN: L_EXPN DEQ $@24 L_EXPN
 
-   56 A_EXPN: TERMINALS
+   55 $@25: %empty
 
-   57 TERMINALS: VAR
-   58          | NUMBER
+   56 L_EXPN: NOT $@25 L_EXPN
+   57       | TERMINALS
+
+   58 $@26: %empty
+
+   59 WRITE_VAR_LIST: QUOTED_STRING $@26 COMA WRITE_VAR_LIST
+
+   60 $@27: %empty
+
+   61 WRITE_VAR_LIST: VAR $@27 COMA WRITE_VAR_LIST
+   62               | QUOTED_STRING
+   63               | VAR
+
+   64 $@28: %empty
+
+   65 READ_VAR_LIST: VAR $@28 COMA READ_VAR_LIST
+   66              | VAR
+
+   67 A_EXPN: TERMINALS
+
+   68 TERMINALS: VAR
+   69          | NUMBER
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
 error (256)
-NUMBER (258) 58
+NUMBER (258) 69
 PROC (259) 2
 MAIN (260) 2
 BGIN (261) 2
-COLON (262) 2 6 22
+COLON (262) 2 6 18
 END (263) 2
 ASSIGNMENT (264) 9
 VAR_START (265) 6
-COMA (266) 24 48 50 54
-SEMICOLON (267) 6 9 10 11 21
-VAR (268) 9 21 22 24 25 50 52 54 55 57
+COMA (266) 35 59 61 65
+SEMICOLON (267) 6 9 10 11 17
+VAR (268) 9 17 18 35 36 61 63 65 66 68
 READ (269) 10
-LB (270) 10 11 18
-RB (271) 10 11 18
+LB (270) 10 11 22 28
+RB (271) 10 11 22 28
 WRITE (272) 11
-QUOTED_STRING (273) 48 51
-IF (274) 18
-ELSE (275) 18
-ENDIF (276) 18
+QUOTED_STRING (273) 59 62
+IF (274) 22
+ELSE (275) 32
+ENDIF (276) 14
 GEQ (277)
-LEQ (278) 35
-GT (279) 37
-LT (280) 39
-NEQ (281) 41
-DEQ (282) 43
-NOT (283) 45
-LAND (284) 31
-LOR (285) 33
-GOTO (286) 21
-INT (287) 26
-CHAR (288) 27
-FLOAT (289) 28
-DOUBLE (290) 29
+LEQ (278) 46
+GT (279) 48
+LT (280) 50
+NEQ (281) 52
+DEQ (282) 54
+NOT (283) 56
+LAND (284) 42
+LOR (285) 44
+GOTO (286) 17
+ELSEIF (287) 28
+INT (288) 37
+CHAR (289) 38
+FLOAT (290) 39
+DOUBLE (291) 40
 
 
 Nonterminals, with rules where they appear
 
-$accept (36)
+$accept (37)
     on left: 0
-prm (37)
+prm (38)
     on left: 2, on right: 0
-$@1 (38)
+$@1 (39)
     on left: 1, on right: 2
-STATEMENTS (39)
-    on left: 4 5, on right: 2 4 18
-$@2 (40)
+STATEMENTS (40)
+    on left: 4 5, on right: 2 4 22 28 32
+$@2 (41)
     on left: 3, on right: 4
-STATEMENT (41)
-    on left: 6 9 10 11 18 21 22, on right: 4
-$@3 (42)
+STATEMENT (42)
+    on left: 6 9 10 11 14 17 18, on right: 4
+$@3 (43)
     on left: 7, on right: 9
-$@4 (43)
+$@4 (44)
     on left: 8, on right: 9
-$@5 (44)
-    on left: 12, on right: 18
-$@6 (45)
-    on left: 13, on right: 18
-$@7 (46)
-    on left: 14, on right: 18
-$@8 (47)
-    on left: 15, on right: 18
-$@9 (48)
-    on left: 16, on right: 18
-$@10 (49)
-    on left: 17, on right: 18
-$@11 (50)
-    on left: 19, on right: 21
-$@12 (51)
-    on left: 20, on right: 21
-VAR_LIST (52)
-    on left: 24 25, on right: 6 24
-$@13 (53)
-    on left: 23, on right: 24
-TYPE (54)
-    on left: 26 27 28 29, on right: 6
-L_EXPN (55)
-    on left: 31 33 35 37 39 41 43 45 46, on right: 18 31 33 35 37 39
-    41 43 45
-$@14 (56)
-    on left: 30, on right: 31
-$@15 (57)
-    on left: 32, on right: 33
-$@16 (58)
+$@5 (45)
+    on left: 12, on right: 14
+$@6 (46)
+    on left: 13, on right: 14
+$@7 (47)
+    on left: 15, on right: 17
+$@8 (48)
+    on left: 16, on right: 17
+IF_BLOCK (49)
+    on left: 22, on right: 14
+$@9 (50)
+    on left: 19, on right: 22
+$@10 (51)
+    on left: 20, on right: 22
+$@11 (52)
+    on left: 21, on right: 22
+ELSEIF_BLOCKS (53)
+    on left: 23 24, on right: 14 23
+ELSEIF_BLOCK (54)
+    on left: 28 29, on right: 23 24
+$@12 (55)
+    on left: 25, on right: 28
+$@13 (56)
+    on left: 26, on right: 28
+$@14 (57)
+    on left: 27, on right: 28
+ELSE_BLOCK (58)
+    on left: 32 33, on right: 14
+$@15 (59)
+    on left: 30, on right: 32
+$@16 (60)
+    on left: 31, on right: 32
+VAR_LIST (61)
+    on left: 35 36, on right: 6 35
+$@17 (62)
     on left: 34, on right: 35
-$@17 (59)
-    on left: 36, on right: 37
-$@18 (60)
-    on left: 38, on right: 39
-$@19 (61)
-    on left: 40, on right: 41
-$@20 (62)
-    on left: 42, on right: 43
-$@21 (63)
-    on left: 44, on right: 45
-WRITE_VAR_LIST (64)
-    on left: 48 50 51 52, on right: 11 48 50
-$@22 (65)
+TYPE (63)
+    on left: 37 38 39 40, on right: 6
+L_EXPN (64)
+    on left: 42 44 46 48 50 52 54 56 57, on right: 22 28 42 44 46 48
+    50 52 54 56
+$@18 (65)
+    on left: 41, on right: 42
+$@19 (66)
+    on left: 43, on right: 44
+$@20 (67)
+    on left: 45, on right: 46
+$@21 (68)
     on left: 47, on right: 48
-$@23 (66)
+$@22 (69)
     on left: 49, on right: 50
-READ_VAR_LIST (67)
-    on left: 54 55, on right: 10 54
-$@24 (68)
+$@23 (70)
+    on left: 51, on right: 52
+$@24 (71)
     on left: 53, on right: 54
-A_EXPN (69)
-    on left: 56, on right: 9
-TERMINALS (70)
-    on left: 57 58, on right: 46 56
+$@25 (72)
+    on left: 55, on right: 56
+WRITE_VAR_LIST (73)
+    on left: 59 61 62 63, on right: 11 59 61
+$@26 (74)
+    on left: 58, on right: 59
+$@27 (75)
+    on left: 60, on right: 61
+READ_VAR_LIST (76)
+    on left: 65 66, on right: 10 65
+$@28 (77)
+    on left: 64, on right: 65
+A_EXPN (78)
+    on left: 67, on right: 9
+TERMINALS (79)
+    on left: 68 69, on right: 57 67
 
 
 State 0
@@ -318,6 +358,7 @@ State 10
     GOTO       shift, and go to state 17
 
     STATEMENT  go to state 18
+    IF_BLOCK   go to state 19
 
 
 State 11
@@ -331,51 +372,51 @@ State 12
 
     6 STATEMENT: VAR_START . VAR_LIST COLON TYPE SEMICOLON
 
-    VAR  shift, and go to state 19
+    VAR  shift, and go to state 20
 
-    VAR_LIST  go to state 20
+    VAR_LIST  go to state 21
 
 
 State 13
 
     9 STATEMENT: VAR . $@3 ASSIGNMENT $@4 A_EXPN SEMICOLON
-   22          | VAR . COLON
+   18          | VAR . COLON
 
-    COLON  shift, and go to state 21
+    COLON  shift, and go to state 22
 
     $default  reduce using rule 7 ($@3)
 
-    $@3  go to state 22
+    $@3  go to state 23
 
 
 State 14
 
    10 STATEMENT: READ . LB READ_VAR_LIST RB SEMICOLON
 
-    LB  shift, and go to state 23
+    LB  shift, and go to state 24
 
 
 State 15
 
    11 STATEMENT: WRITE . LB WRITE_VAR_LIST RB SEMICOLON
 
-    LB  shift, and go to state 24
+    LB  shift, and go to state 25
 
 
 State 16
 
-   18 STATEMENT: IF . LB $@5 L_EXPN RB $@6 $@7 STATEMENTS $@8 ELSE $@9 $@10 STATEMENTS ENDIF
+   22 IF_BLOCK: IF . LB $@9 L_EXPN RB $@10 $@11 STATEMENTS
 
-    LB  shift, and go to state 25
+    LB  shift, and go to state 26
 
 
 State 17
 
-   21 STATEMENT: GOTO . $@11 VAR $@12 SEMICOLON
+   17 STATEMENT: GOTO . $@7 VAR $@8 SEMICOLON
 
-    $default  reduce using rule 19 ($@11)
+    $default  reduce using rule 15 ($@7)
 
-    $@11  go to state 26
+    $@7  go to state 27
 
 
 State 18
@@ -387,779 +428,935 @@ State 18
 
 State 19
 
-   24 VAR_LIST: VAR . $@13 COMA VAR_LIST
-   25         | VAR .
+   14 STATEMENT: IF_BLOCK . $@5 ELSEIF_BLOCKS $@6 ELSE_BLOCK ENDIF
 
-    COLON     reduce using rule 25 (VAR_LIST)
-    $default  reduce using rule 23 ($@13)
+    $default  reduce using rule 12 ($@5)
 
-    $@13  go to state 27
+    $@5  go to state 28
 
 
 State 20
 
-    6 STATEMENT: VAR_START VAR_LIST . COLON TYPE SEMICOLON
+   35 VAR_LIST: VAR . $@17 COMA VAR_LIST
+   36         | VAR .
 
-    COLON  shift, and go to state 28
+    COLON     reduce using rule 36 (VAR_LIST)
+    $default  reduce using rule 34 ($@17)
+
+    $@17  go to state 29
 
 
 State 21
 
-   22 STATEMENT: VAR COLON .
+    6 STATEMENT: VAR_START VAR_LIST . COLON TYPE SEMICOLON
 
-    $default  reduce using rule 22 (STATEMENT)
+    COLON  shift, and go to state 30
 
 
 State 22
 
-    9 STATEMENT: VAR $@3 . ASSIGNMENT $@4 A_EXPN SEMICOLON
+   18 STATEMENT: VAR COLON .
 
-    ASSIGNMENT  shift, and go to state 29
+    $default  reduce using rule 18 (STATEMENT)
 
 
 State 23
 
-   10 STATEMENT: READ LB . READ_VAR_LIST RB SEMICOLON
+    9 STATEMENT: VAR $@3 . ASSIGNMENT $@4 A_EXPN SEMICOLON
 
-    VAR  shift, and go to state 30
-
-    READ_VAR_LIST  go to state 31
+    ASSIGNMENT  shift, and go to state 31
 
 
 State 24
 
-   11 STATEMENT: WRITE LB . WRITE_VAR_LIST RB SEMICOLON
+   10 STATEMENT: READ LB . READ_VAR_LIST RB SEMICOLON
 
-    VAR            shift, and go to state 32
-    QUOTED_STRING  shift, and go to state 33
+    VAR  shift, and go to state 32
 
-    WRITE_VAR_LIST  go to state 34
+    READ_VAR_LIST  go to state 33
 
 
 State 25
 
-   18 STATEMENT: IF LB . $@5 L_EXPN RB $@6 $@7 STATEMENTS $@8 ELSE $@9 $@10 STATEMENTS ENDIF
+   11 STATEMENT: WRITE LB . WRITE_VAR_LIST RB SEMICOLON
 
-    $default  reduce using rule 12 ($@5)
+    VAR            shift, and go to state 34
+    QUOTED_STRING  shift, and go to state 35
 
-    $@5  go to state 35
+    WRITE_VAR_LIST  go to state 36
 
 
 State 26
 
-   21 STATEMENT: GOTO $@11 . VAR $@12 SEMICOLON
+   22 IF_BLOCK: IF LB . $@9 L_EXPN RB $@10 $@11 STATEMENTS
 
-    VAR  shift, and go to state 36
+    $default  reduce using rule 19 ($@9)
+
+    $@9  go to state 37
 
 
 State 27
 
-   24 VAR_LIST: VAR $@13 . COMA VAR_LIST
+   17 STATEMENT: GOTO $@7 . VAR $@8 SEMICOLON
 
-    COMA  shift, and go to state 37
+    VAR  shift, and go to state 38
 
 
 State 28
 
-    6 STATEMENT: VAR_START VAR_LIST COLON . TYPE SEMICOLON
+   14 STATEMENT: IF_BLOCK $@5 . ELSEIF_BLOCKS $@6 ELSE_BLOCK ENDIF
 
-    INT     shift, and go to state 38
-    CHAR    shift, and go to state 39
-    FLOAT   shift, and go to state 40
-    DOUBLE  shift, and go to state 41
+    ELSEIF  shift, and go to state 39
 
-    TYPE  go to state 42
+    ELSEIF    [reduce using rule 29 (ELSEIF_BLOCK)]
+    $default  reduce using rule 29 (ELSEIF_BLOCK)
+
+    ELSEIF_BLOCKS  go to state 40
+    ELSEIF_BLOCK   go to state 41
 
 
 State 29
+
+   35 VAR_LIST: VAR $@17 . COMA VAR_LIST
+
+    COMA  shift, and go to state 42
+
+
+State 30
+
+    6 STATEMENT: VAR_START VAR_LIST COLON . TYPE SEMICOLON
+
+    INT     shift, and go to state 43
+    CHAR    shift, and go to state 44
+    FLOAT   shift, and go to state 45
+    DOUBLE  shift, and go to state 46
+
+    TYPE  go to state 47
+
+
+State 31
 
     9 STATEMENT: VAR $@3 ASSIGNMENT . $@4 A_EXPN SEMICOLON
 
     $default  reduce using rule 8 ($@4)
 
-    $@4  go to state 43
-
-
-State 30
-
-   54 READ_VAR_LIST: VAR . $@24 COMA READ_VAR_LIST
-   55              | VAR .
-
-    RB        reduce using rule 55 (READ_VAR_LIST)
-    $default  reduce using rule 53 ($@24)
-
-    $@24  go to state 44
-
-
-State 31
-
-   10 STATEMENT: READ LB READ_VAR_LIST . RB SEMICOLON
-
-    RB  shift, and go to state 45
+    $@4  go to state 48
 
 
 State 32
 
-   50 WRITE_VAR_LIST: VAR . $@23 COMA WRITE_VAR_LIST
-   52               | VAR .
+   65 READ_VAR_LIST: VAR . $@28 COMA READ_VAR_LIST
+   66              | VAR .
 
-    RB        reduce using rule 52 (WRITE_VAR_LIST)
-    $default  reduce using rule 49 ($@23)
+    RB        reduce using rule 66 (READ_VAR_LIST)
+    $default  reduce using rule 64 ($@28)
 
-    $@23  go to state 46
+    $@28  go to state 49
 
 
 State 33
 
-   48 WRITE_VAR_LIST: QUOTED_STRING . $@22 COMA WRITE_VAR_LIST
-   51               | QUOTED_STRING .
+   10 STATEMENT: READ LB READ_VAR_LIST . RB SEMICOLON
 
-    RB        reduce using rule 51 (WRITE_VAR_LIST)
-    $default  reduce using rule 47 ($@22)
-
-    $@22  go to state 47
+    RB  shift, and go to state 50
 
 
 State 34
 
-   11 STATEMENT: WRITE LB WRITE_VAR_LIST . RB SEMICOLON
+   61 WRITE_VAR_LIST: VAR . $@27 COMA WRITE_VAR_LIST
+   63               | VAR .
 
-    RB  shift, and go to state 48
+    RB        reduce using rule 63 (WRITE_VAR_LIST)
+    $default  reduce using rule 60 ($@27)
+
+    $@27  go to state 51
 
 
 State 35
 
-   18 STATEMENT: IF LB $@5 . L_EXPN RB $@6 $@7 STATEMENTS $@8 ELSE $@9 $@10 STATEMENTS ENDIF
+   59 WRITE_VAR_LIST: QUOTED_STRING . $@26 COMA WRITE_VAR_LIST
+   62               | QUOTED_STRING .
 
-    NUMBER  shift, and go to state 49
-    VAR     shift, and go to state 50
-    NOT     shift, and go to state 51
+    RB        reduce using rule 62 (WRITE_VAR_LIST)
+    $default  reduce using rule 58 ($@26)
 
-    L_EXPN     go to state 52
-    TERMINALS  go to state 53
+    $@26  go to state 52
 
 
 State 36
 
-   21 STATEMENT: GOTO $@11 VAR . $@12 SEMICOLON
+   11 STATEMENT: WRITE LB WRITE_VAR_LIST . RB SEMICOLON
 
-    $default  reduce using rule 20 ($@12)
-
-    $@12  go to state 54
+    RB  shift, and go to state 53
 
 
 State 37
 
-   24 VAR_LIST: VAR $@13 COMA . VAR_LIST
+   22 IF_BLOCK: IF LB $@9 . L_EXPN RB $@10 $@11 STATEMENTS
 
-    VAR  shift, and go to state 19
+    NUMBER  shift, and go to state 54
+    VAR     shift, and go to state 55
+    NOT     shift, and go to state 56
 
-    VAR_LIST  go to state 55
+    L_EXPN     go to state 57
+    TERMINALS  go to state 58
 
 
 State 38
 
-   26 TYPE: INT .
+   17 STATEMENT: GOTO $@7 VAR . $@8 SEMICOLON
 
-    $default  reduce using rule 26 (TYPE)
+    $default  reduce using rule 16 ($@8)
+
+    $@8  go to state 59
 
 
 State 39
 
-   27 TYPE: CHAR .
+   28 ELSEIF_BLOCK: ELSEIF . LB $@12 L_EXPN RB $@13 $@14 STATEMENTS
 
-    $default  reduce using rule 27 (TYPE)
+    LB  shift, and go to state 60
 
 
 State 40
 
-   28 TYPE: FLOAT .
+   14 STATEMENT: IF_BLOCK $@5 ELSEIF_BLOCKS . $@6 ELSE_BLOCK ENDIF
 
-    $default  reduce using rule 28 (TYPE)
+    $default  reduce using rule 13 ($@6)
+
+    $@6  go to state 61
 
 
 State 41
 
-   29 TYPE: DOUBLE .
+   23 ELSEIF_BLOCKS: ELSEIF_BLOCK . ELSEIF_BLOCKS
+   24              | ELSEIF_BLOCK .
 
-    $default  reduce using rule 29 (TYPE)
+    ELSEIF  shift, and go to state 39
+
+    ELSE      reduce using rule 24 (ELSEIF_BLOCKS)
+    ELSE      [reduce using rule 29 (ELSEIF_BLOCK)]
+    ENDIF     reduce using rule 24 (ELSEIF_BLOCKS)
+    ENDIF     [reduce using rule 29 (ELSEIF_BLOCK)]
+    ELSEIF    [reduce using rule 29 (ELSEIF_BLOCK)]
+    $default  reduce using rule 24 (ELSEIF_BLOCKS)
+
+    ELSEIF_BLOCKS  go to state 62
+    ELSEIF_BLOCK   go to state 41
 
 
 State 42
 
-    6 STATEMENT: VAR_START VAR_LIST COLON TYPE . SEMICOLON
+   35 VAR_LIST: VAR $@17 COMA . VAR_LIST
 
-    SEMICOLON  shift, and go to state 56
+    VAR  shift, and go to state 20
+
+    VAR_LIST  go to state 63
 
 
 State 43
 
-    9 STATEMENT: VAR $@3 ASSIGNMENT $@4 . A_EXPN SEMICOLON
+   37 TYPE: INT .
 
-    NUMBER  shift, and go to state 49
-    VAR     shift, and go to state 50
-
-    A_EXPN     go to state 57
-    TERMINALS  go to state 58
+    $default  reduce using rule 37 (TYPE)
 
 
 State 44
 
-   54 READ_VAR_LIST: VAR $@24 . COMA READ_VAR_LIST
+   38 TYPE: CHAR .
 
-    COMA  shift, and go to state 59
+    $default  reduce using rule 38 (TYPE)
 
 
 State 45
 
-   10 STATEMENT: READ LB READ_VAR_LIST RB . SEMICOLON
+   39 TYPE: FLOAT .
 
-    SEMICOLON  shift, and go to state 60
+    $default  reduce using rule 39 (TYPE)
 
 
 State 46
 
-   50 WRITE_VAR_LIST: VAR $@23 . COMA WRITE_VAR_LIST
+   40 TYPE: DOUBLE .
 
-    COMA  shift, and go to state 61
+    $default  reduce using rule 40 (TYPE)
 
 
 State 47
 
-   48 WRITE_VAR_LIST: QUOTED_STRING $@22 . COMA WRITE_VAR_LIST
+    6 STATEMENT: VAR_START VAR_LIST COLON TYPE . SEMICOLON
 
-    COMA  shift, and go to state 62
+    SEMICOLON  shift, and go to state 64
 
 
 State 48
 
-   11 STATEMENT: WRITE LB WRITE_VAR_LIST RB . SEMICOLON
+    9 STATEMENT: VAR $@3 ASSIGNMENT $@4 . A_EXPN SEMICOLON
 
-    SEMICOLON  shift, and go to state 63
+    NUMBER  shift, and go to state 54
+    VAR     shift, and go to state 55
+
+    A_EXPN     go to state 65
+    TERMINALS  go to state 66
 
 
 State 49
 
-   58 TERMINALS: NUMBER .
+   65 READ_VAR_LIST: VAR $@28 . COMA READ_VAR_LIST
 
-    $default  reduce using rule 58 (TERMINALS)
+    COMA  shift, and go to state 67
 
 
 State 50
 
-   57 TERMINALS: VAR .
+   10 STATEMENT: READ LB READ_VAR_LIST RB . SEMICOLON
 
-    $default  reduce using rule 57 (TERMINALS)
+    SEMICOLON  shift, and go to state 68
 
 
 State 51
 
-   45 L_EXPN: NOT . $@21 L_EXPN
+   61 WRITE_VAR_LIST: VAR $@27 . COMA WRITE_VAR_LIST
 
-    $default  reduce using rule 44 ($@21)
-
-    $@21  go to state 64
+    COMA  shift, and go to state 69
 
 
 State 52
 
-   18 STATEMENT: IF LB $@5 L_EXPN . RB $@6 $@7 STATEMENTS $@8 ELSE $@9 $@10 STATEMENTS ENDIF
-   31 L_EXPN: L_EXPN . LAND $@14 L_EXPN
-   33       | L_EXPN . LOR $@15 L_EXPN
-   35       | L_EXPN . LEQ $@16 L_EXPN
-   37       | L_EXPN . GT $@17 L_EXPN
-   39       | L_EXPN . LT $@18 L_EXPN
-   41       | L_EXPN . NEQ $@19 L_EXPN
-   43       | L_EXPN . DEQ $@20 L_EXPN
+   59 WRITE_VAR_LIST: QUOTED_STRING $@26 . COMA WRITE_VAR_LIST
 
-    RB    shift, and go to state 65
-    LEQ   shift, and go to state 66
-    GT    shift, and go to state 67
-    LT    shift, and go to state 68
-    NEQ   shift, and go to state 69
-    DEQ   shift, and go to state 70
-    LAND  shift, and go to state 71
-    LOR   shift, and go to state 72
+    COMA  shift, and go to state 70
 
 
 State 53
 
-   46 L_EXPN: TERMINALS .
+   11 STATEMENT: WRITE LB WRITE_VAR_LIST RB . SEMICOLON
 
-    $default  reduce using rule 46 (L_EXPN)
+    SEMICOLON  shift, and go to state 71
 
 
 State 54
 
-   21 STATEMENT: GOTO $@11 VAR $@12 . SEMICOLON
+   69 TERMINALS: NUMBER .
 
-    SEMICOLON  shift, and go to state 73
+    $default  reduce using rule 69 (TERMINALS)
 
 
 State 55
 
-   24 VAR_LIST: VAR $@13 COMA VAR_LIST .
+   68 TERMINALS: VAR .
 
-    $default  reduce using rule 24 (VAR_LIST)
+    $default  reduce using rule 68 (TERMINALS)
 
 
 State 56
+
+   56 L_EXPN: NOT . $@25 L_EXPN
+
+    $default  reduce using rule 55 ($@25)
+
+    $@25  go to state 72
+
+
+State 57
+
+   22 IF_BLOCK: IF LB $@9 L_EXPN . RB $@10 $@11 STATEMENTS
+   42 L_EXPN: L_EXPN . LAND $@18 L_EXPN
+   44       | L_EXPN . LOR $@19 L_EXPN
+   46       | L_EXPN . LEQ $@20 L_EXPN
+   48       | L_EXPN . GT $@21 L_EXPN
+   50       | L_EXPN . LT $@22 L_EXPN
+   52       | L_EXPN . NEQ $@23 L_EXPN
+   54       | L_EXPN . DEQ $@24 L_EXPN
+
+    RB    shift, and go to state 73
+    LEQ   shift, and go to state 74
+    GT    shift, and go to state 75
+    LT    shift, and go to state 76
+    NEQ   shift, and go to state 77
+    DEQ   shift, and go to state 78
+    LAND  shift, and go to state 79
+    LOR   shift, and go to state 80
+
+
+State 58
+
+   57 L_EXPN: TERMINALS .
+
+    $default  reduce using rule 57 (L_EXPN)
+
+
+State 59
+
+   17 STATEMENT: GOTO $@7 VAR $@8 . SEMICOLON
+
+    SEMICOLON  shift, and go to state 81
+
+
+State 60
+
+   28 ELSEIF_BLOCK: ELSEIF LB . $@12 L_EXPN RB $@13 $@14 STATEMENTS
+
+    $default  reduce using rule 25 ($@12)
+
+    $@12  go to state 82
+
+
+State 61
+
+   14 STATEMENT: IF_BLOCK $@5 ELSEIF_BLOCKS $@6 . ELSE_BLOCK ENDIF
+
+    ELSE  shift, and go to state 83
+
+    $default  reduce using rule 33 (ELSE_BLOCK)
+
+    ELSE_BLOCK  go to state 84
+
+
+State 62
+
+   23 ELSEIF_BLOCKS: ELSEIF_BLOCK ELSEIF_BLOCKS .
+
+    $default  reduce using rule 23 (ELSEIF_BLOCKS)
+
+
+State 63
+
+   35 VAR_LIST: VAR $@17 COMA VAR_LIST .
+
+    $default  reduce using rule 35 (VAR_LIST)
+
+
+State 64
 
     6 STATEMENT: VAR_START VAR_LIST COLON TYPE SEMICOLON .
 
     $default  reduce using rule 6 (STATEMENT)
 
 
-State 57
+State 65
 
     9 STATEMENT: VAR $@3 ASSIGNMENT $@4 A_EXPN . SEMICOLON
 
-    SEMICOLON  shift, and go to state 74
+    SEMICOLON  shift, and go to state 85
 
 
-State 58
+State 66
 
-   56 A_EXPN: TERMINALS .
+   67 A_EXPN: TERMINALS .
 
-    $default  reduce using rule 56 (A_EXPN)
-
-
-State 59
-
-   54 READ_VAR_LIST: VAR $@24 COMA . READ_VAR_LIST
-
-    VAR  shift, and go to state 30
-
-    READ_VAR_LIST  go to state 75
+    $default  reduce using rule 67 (A_EXPN)
 
 
-State 60
+State 67
+
+   65 READ_VAR_LIST: VAR $@28 COMA . READ_VAR_LIST
+
+    VAR  shift, and go to state 32
+
+    READ_VAR_LIST  go to state 86
+
+
+State 68
 
    10 STATEMENT: READ LB READ_VAR_LIST RB SEMICOLON .
 
     $default  reduce using rule 10 (STATEMENT)
 
 
-State 61
+State 69
 
-   50 WRITE_VAR_LIST: VAR $@23 COMA . WRITE_VAR_LIST
+   61 WRITE_VAR_LIST: VAR $@27 COMA . WRITE_VAR_LIST
 
-    VAR            shift, and go to state 32
-    QUOTED_STRING  shift, and go to state 33
+    VAR            shift, and go to state 34
+    QUOTED_STRING  shift, and go to state 35
 
-    WRITE_VAR_LIST  go to state 76
-
-
-State 62
-
-   48 WRITE_VAR_LIST: QUOTED_STRING $@22 COMA . WRITE_VAR_LIST
-
-    VAR            shift, and go to state 32
-    QUOTED_STRING  shift, and go to state 33
-
-    WRITE_VAR_LIST  go to state 77
+    WRITE_VAR_LIST  go to state 87
 
 
-State 63
+State 70
+
+   59 WRITE_VAR_LIST: QUOTED_STRING $@26 COMA . WRITE_VAR_LIST
+
+    VAR            shift, and go to state 34
+    QUOTED_STRING  shift, and go to state 35
+
+    WRITE_VAR_LIST  go to state 88
+
+
+State 71
 
    11 STATEMENT: WRITE LB WRITE_VAR_LIST RB SEMICOLON .
 
     $default  reduce using rule 11 (STATEMENT)
 
 
-State 64
-
-   45 L_EXPN: NOT $@21 . L_EXPN
-
-    NUMBER  shift, and go to state 49
-    VAR     shift, and go to state 50
-    NOT     shift, and go to state 51
-
-    L_EXPN     go to state 78
-    TERMINALS  go to state 53
-
-
-State 65
-
-   18 STATEMENT: IF LB $@5 L_EXPN RB . $@6 $@7 STATEMENTS $@8 ELSE $@9 $@10 STATEMENTS ENDIF
-
-    $default  reduce using rule 13 ($@6)
-
-    $@6  go to state 79
-
-
-State 66
-
-   35 L_EXPN: L_EXPN LEQ . $@16 L_EXPN
-
-    $default  reduce using rule 34 ($@16)
-
-    $@16  go to state 80
-
-
-State 67
-
-   37 L_EXPN: L_EXPN GT . $@17 L_EXPN
-
-    $default  reduce using rule 36 ($@17)
-
-    $@17  go to state 81
-
-
-State 68
-
-   39 L_EXPN: L_EXPN LT . $@18 L_EXPN
-
-    $default  reduce using rule 38 ($@18)
-
-    $@18  go to state 82
-
-
-State 69
-
-   41 L_EXPN: L_EXPN NEQ . $@19 L_EXPN
-
-    $default  reduce using rule 40 ($@19)
-
-    $@19  go to state 83
-
-
-State 70
-
-   43 L_EXPN: L_EXPN DEQ . $@20 L_EXPN
-
-    $default  reduce using rule 42 ($@20)
-
-    $@20  go to state 84
-
-
-State 71
-
-   31 L_EXPN: L_EXPN LAND . $@14 L_EXPN
-
-    $default  reduce using rule 30 ($@14)
-
-    $@14  go to state 85
-
-
 State 72
 
-   33 L_EXPN: L_EXPN LOR . $@15 L_EXPN
+   56 L_EXPN: NOT $@25 . L_EXPN
 
-    $default  reduce using rule 32 ($@15)
+    NUMBER  shift, and go to state 54
+    VAR     shift, and go to state 55
+    NOT     shift, and go to state 56
 
-    $@15  go to state 86
+    L_EXPN     go to state 89
+    TERMINALS  go to state 58
 
 
 State 73
 
-   21 STATEMENT: GOTO $@11 VAR $@12 SEMICOLON .
+   22 IF_BLOCK: IF LB $@9 L_EXPN RB . $@10 $@11 STATEMENTS
 
-    $default  reduce using rule 21 (STATEMENT)
+    $default  reduce using rule 20 ($@10)
+
+    $@10  go to state 90
 
 
 State 74
+
+   46 L_EXPN: L_EXPN LEQ . $@20 L_EXPN
+
+    $default  reduce using rule 45 ($@20)
+
+    $@20  go to state 91
+
+
+State 75
+
+   48 L_EXPN: L_EXPN GT . $@21 L_EXPN
+
+    $default  reduce using rule 47 ($@21)
+
+    $@21  go to state 92
+
+
+State 76
+
+   50 L_EXPN: L_EXPN LT . $@22 L_EXPN
+
+    $default  reduce using rule 49 ($@22)
+
+    $@22  go to state 93
+
+
+State 77
+
+   52 L_EXPN: L_EXPN NEQ . $@23 L_EXPN
+
+    $default  reduce using rule 51 ($@23)
+
+    $@23  go to state 94
+
+
+State 78
+
+   54 L_EXPN: L_EXPN DEQ . $@24 L_EXPN
+
+    $default  reduce using rule 53 ($@24)
+
+    $@24  go to state 95
+
+
+State 79
+
+   42 L_EXPN: L_EXPN LAND . $@18 L_EXPN
+
+    $default  reduce using rule 41 ($@18)
+
+    $@18  go to state 96
+
+
+State 80
+
+   44 L_EXPN: L_EXPN LOR . $@19 L_EXPN
+
+    $default  reduce using rule 43 ($@19)
+
+    $@19  go to state 97
+
+
+State 81
+
+   17 STATEMENT: GOTO $@7 VAR $@8 SEMICOLON .
+
+    $default  reduce using rule 17 (STATEMENT)
+
+
+State 82
+
+   28 ELSEIF_BLOCK: ELSEIF LB $@12 . L_EXPN RB $@13 $@14 STATEMENTS
+
+    NUMBER  shift, and go to state 54
+    VAR     shift, and go to state 55
+    NOT     shift, and go to state 56
+
+    L_EXPN     go to state 98
+    TERMINALS  go to state 58
+
+
+State 83
+
+   32 ELSE_BLOCK: ELSE . $@15 $@16 STATEMENTS
+
+    $default  reduce using rule 30 ($@15)
+
+    $@15  go to state 99
+
+
+State 84
+
+   14 STATEMENT: IF_BLOCK $@5 ELSEIF_BLOCKS $@6 ELSE_BLOCK . ENDIF
+
+    ENDIF  shift, and go to state 100
+
+
+State 85
 
     9 STATEMENT: VAR $@3 ASSIGNMENT $@4 A_EXPN SEMICOLON .
 
     $default  reduce using rule 9 (STATEMENT)
 
 
-State 75
-
-   54 READ_VAR_LIST: VAR $@24 COMA READ_VAR_LIST .
-
-    $default  reduce using rule 54 (READ_VAR_LIST)
-
-
-State 76
-
-   50 WRITE_VAR_LIST: VAR $@23 COMA WRITE_VAR_LIST .
-
-    $default  reduce using rule 50 (WRITE_VAR_LIST)
-
-
-State 77
-
-   48 WRITE_VAR_LIST: QUOTED_STRING $@22 COMA WRITE_VAR_LIST .
-
-    $default  reduce using rule 48 (WRITE_VAR_LIST)
-
-
-State 78
-
-   31 L_EXPN: L_EXPN . LAND $@14 L_EXPN
-   33       | L_EXPN . LOR $@15 L_EXPN
-   35       | L_EXPN . LEQ $@16 L_EXPN
-   37       | L_EXPN . GT $@17 L_EXPN
-   39       | L_EXPN . LT $@18 L_EXPN
-   41       | L_EXPN . NEQ $@19 L_EXPN
-   43       | L_EXPN . DEQ $@20 L_EXPN
-   45       | NOT $@21 L_EXPN .
-
-    $default  reduce using rule 45 (L_EXPN)
-
-
-State 79
-
-   18 STATEMENT: IF LB $@5 L_EXPN RB $@6 . $@7 STATEMENTS $@8 ELSE $@9 $@10 STATEMENTS ENDIF
-
-    $default  reduce using rule 14 ($@7)
-
-    $@7  go to state 87
-
-
-State 80
-
-   35 L_EXPN: L_EXPN LEQ $@16 . L_EXPN
-
-    NUMBER  shift, and go to state 49
-    VAR     shift, and go to state 50
-    NOT     shift, and go to state 51
-
-    L_EXPN     go to state 88
-    TERMINALS  go to state 53
-
-
-State 81
-
-   37 L_EXPN: L_EXPN GT $@17 . L_EXPN
-
-    NUMBER  shift, and go to state 49
-    VAR     shift, and go to state 50
-    NOT     shift, and go to state 51
-
-    L_EXPN     go to state 89
-    TERMINALS  go to state 53
-
-
-State 82
-
-   39 L_EXPN: L_EXPN LT $@18 . L_EXPN
-
-    NUMBER  shift, and go to state 49
-    VAR     shift, and go to state 50
-    NOT     shift, and go to state 51
-
-    L_EXPN     go to state 90
-    TERMINALS  go to state 53
-
-
-State 83
-
-   41 L_EXPN: L_EXPN NEQ $@19 . L_EXPN
-
-    NUMBER  shift, and go to state 49
-    VAR     shift, and go to state 50
-    NOT     shift, and go to state 51
-
-    L_EXPN     go to state 91
-    TERMINALS  go to state 53
-
-
-State 84
-
-   43 L_EXPN: L_EXPN DEQ $@20 . L_EXPN
-
-    NUMBER  shift, and go to state 49
-    VAR     shift, and go to state 50
-    NOT     shift, and go to state 51
-
-    L_EXPN     go to state 92
-    TERMINALS  go to state 53
-
-
-State 85
-
-   31 L_EXPN: L_EXPN LAND $@14 . L_EXPN
-
-    NUMBER  shift, and go to state 49
-    VAR     shift, and go to state 50
-    NOT     shift, and go to state 51
-
-    L_EXPN     go to state 93
-    TERMINALS  go to state 53
-
-
 State 86
 
-   33 L_EXPN: L_EXPN LOR $@15 . L_EXPN
+   65 READ_VAR_LIST: VAR $@28 COMA READ_VAR_LIST .
 
-    NUMBER  shift, and go to state 49
-    VAR     shift, and go to state 50
-    NOT     shift, and go to state 51
-
-    L_EXPN     go to state 94
-    TERMINALS  go to state 53
+    $default  reduce using rule 65 (READ_VAR_LIST)
 
 
 State 87
 
-   18 STATEMENT: IF LB $@5 L_EXPN RB $@6 $@7 . STATEMENTS $@8 ELSE $@9 $@10 STATEMENTS ENDIF
+   61 WRITE_VAR_LIST: VAR $@27 COMA WRITE_VAR_LIST .
 
-    $default  reduce using rule 5 (STATEMENTS)
-
-    STATEMENTS  go to state 95
+    $default  reduce using rule 61 (WRITE_VAR_LIST)
 
 
 State 88
 
-   31 L_EXPN: L_EXPN . LAND $@14 L_EXPN
-   33       | L_EXPN . LOR $@15 L_EXPN
-   35       | L_EXPN . LEQ $@16 L_EXPN
-   35       | L_EXPN LEQ $@16 L_EXPN .
-   37       | L_EXPN . GT $@17 L_EXPN
-   39       | L_EXPN . LT $@18 L_EXPN
-   41       | L_EXPN . NEQ $@19 L_EXPN
-   43       | L_EXPN . DEQ $@20 L_EXPN
+   59 WRITE_VAR_LIST: QUOTED_STRING $@26 COMA WRITE_VAR_LIST .
 
-    $default  reduce using rule 35 (L_EXPN)
+    $default  reduce using rule 59 (WRITE_VAR_LIST)
 
 
 State 89
 
-   31 L_EXPN: L_EXPN . LAND $@14 L_EXPN
-   33       | L_EXPN . LOR $@15 L_EXPN
-   35       | L_EXPN . LEQ $@16 L_EXPN
-   37       | L_EXPN . GT $@17 L_EXPN
-   37       | L_EXPN GT $@17 L_EXPN .
-   39       | L_EXPN . LT $@18 L_EXPN
-   41       | L_EXPN . NEQ $@19 L_EXPN
-   43       | L_EXPN . DEQ $@20 L_EXPN
+   42 L_EXPN: L_EXPN . LAND $@18 L_EXPN
+   44       | L_EXPN . LOR $@19 L_EXPN
+   46       | L_EXPN . LEQ $@20 L_EXPN
+   48       | L_EXPN . GT $@21 L_EXPN
+   50       | L_EXPN . LT $@22 L_EXPN
+   52       | L_EXPN . NEQ $@23 L_EXPN
+   54       | L_EXPN . DEQ $@24 L_EXPN
+   56       | NOT $@25 L_EXPN .
 
-    $default  reduce using rule 37 (L_EXPN)
+    $default  reduce using rule 56 (L_EXPN)
 
 
 State 90
 
-   31 L_EXPN: L_EXPN . LAND $@14 L_EXPN
-   33       | L_EXPN . LOR $@15 L_EXPN
-   35       | L_EXPN . LEQ $@16 L_EXPN
-   37       | L_EXPN . GT $@17 L_EXPN
-   39       | L_EXPN . LT $@18 L_EXPN
-   39       | L_EXPN LT $@18 L_EXPN .
-   41       | L_EXPN . NEQ $@19 L_EXPN
-   43       | L_EXPN . DEQ $@20 L_EXPN
+   22 IF_BLOCK: IF LB $@9 L_EXPN RB $@10 . $@11 STATEMENTS
 
-    $default  reduce using rule 39 (L_EXPN)
+    $default  reduce using rule 21 ($@11)
+
+    $@11  go to state 101
 
 
 State 91
 
-   31 L_EXPN: L_EXPN . LAND $@14 L_EXPN
-   33       | L_EXPN . LOR $@15 L_EXPN
-   35       | L_EXPN . LEQ $@16 L_EXPN
-   37       | L_EXPN . GT $@17 L_EXPN
-   39       | L_EXPN . LT $@18 L_EXPN
-   41       | L_EXPN . NEQ $@19 L_EXPN
-   41       | L_EXPN NEQ $@19 L_EXPN .
-   43       | L_EXPN . DEQ $@20 L_EXPN
+   46 L_EXPN: L_EXPN LEQ $@20 . L_EXPN
 
-    $default  reduce using rule 41 (L_EXPN)
+    NUMBER  shift, and go to state 54
+    VAR     shift, and go to state 55
+    NOT     shift, and go to state 56
+
+    L_EXPN     go to state 102
+    TERMINALS  go to state 58
 
 
 State 92
 
-   31 L_EXPN: L_EXPN . LAND $@14 L_EXPN
-   33       | L_EXPN . LOR $@15 L_EXPN
-   35       | L_EXPN . LEQ $@16 L_EXPN
-   37       | L_EXPN . GT $@17 L_EXPN
-   39       | L_EXPN . LT $@18 L_EXPN
-   41       | L_EXPN . NEQ $@19 L_EXPN
-   43       | L_EXPN . DEQ $@20 L_EXPN
-   43       | L_EXPN DEQ $@20 L_EXPN .
+   48 L_EXPN: L_EXPN GT $@21 . L_EXPN
 
-    $default  reduce using rule 43 (L_EXPN)
+    NUMBER  shift, and go to state 54
+    VAR     shift, and go to state 55
+    NOT     shift, and go to state 56
+
+    L_EXPN     go to state 103
+    TERMINALS  go to state 58
 
 
 State 93
 
-   31 L_EXPN: L_EXPN . LAND $@14 L_EXPN
-   31       | L_EXPN LAND $@14 L_EXPN .
-   33       | L_EXPN . LOR $@15 L_EXPN
-   35       | L_EXPN . LEQ $@16 L_EXPN
-   37       | L_EXPN . GT $@17 L_EXPN
-   39       | L_EXPN . LT $@18 L_EXPN
-   41       | L_EXPN . NEQ $@19 L_EXPN
-   43       | L_EXPN . DEQ $@20 L_EXPN
+   50 L_EXPN: L_EXPN LT $@22 . L_EXPN
 
-    $default  reduce using rule 31 (L_EXPN)
+    NUMBER  shift, and go to state 54
+    VAR     shift, and go to state 55
+    NOT     shift, and go to state 56
+
+    L_EXPN     go to state 104
+    TERMINALS  go to state 58
 
 
 State 94
 
-   31 L_EXPN: L_EXPN . LAND $@14 L_EXPN
-   33       | L_EXPN . LOR $@15 L_EXPN
-   33       | L_EXPN LOR $@15 L_EXPN .
-   35       | L_EXPN . LEQ $@16 L_EXPN
-   37       | L_EXPN . GT $@17 L_EXPN
-   39       | L_EXPN . LT $@18 L_EXPN
-   41       | L_EXPN . NEQ $@19 L_EXPN
-   43       | L_EXPN . DEQ $@20 L_EXPN
+   52 L_EXPN: L_EXPN NEQ $@23 . L_EXPN
 
-    $default  reduce using rule 33 (L_EXPN)
+    NUMBER  shift, and go to state 54
+    VAR     shift, and go to state 55
+    NOT     shift, and go to state 56
+
+    L_EXPN     go to state 105
+    TERMINALS  go to state 58
 
 
 State 95
 
-    4 STATEMENTS: STATEMENTS . $@2 STATEMENT
-   18 STATEMENT: IF LB $@5 L_EXPN RB $@6 $@7 STATEMENTS . $@8 ELSE $@9 $@10 STATEMENTS ENDIF
+   54 L_EXPN: L_EXPN DEQ $@24 . L_EXPN
 
-    ELSE      reduce using rule 15 ($@8)
-    $default  reduce using rule 3 ($@2)
+    NUMBER  shift, and go to state 54
+    VAR     shift, and go to state 55
+    NOT     shift, and go to state 56
 
-    $@2  go to state 10
-    $@8  go to state 96
+    L_EXPN     go to state 106
+    TERMINALS  go to state 58
 
 
 State 96
 
-   18 STATEMENT: IF LB $@5 L_EXPN RB $@6 $@7 STATEMENTS $@8 . ELSE $@9 $@10 STATEMENTS ENDIF
+   42 L_EXPN: L_EXPN LAND $@18 . L_EXPN
 
-    ELSE  shift, and go to state 97
+    NUMBER  shift, and go to state 54
+    VAR     shift, and go to state 55
+    NOT     shift, and go to state 56
+
+    L_EXPN     go to state 107
+    TERMINALS  go to state 58
 
 
 State 97
 
-   18 STATEMENT: IF LB $@5 L_EXPN RB $@6 $@7 STATEMENTS $@8 ELSE . $@9 $@10 STATEMENTS ENDIF
+   44 L_EXPN: L_EXPN LOR $@19 . L_EXPN
 
-    $default  reduce using rule 16 ($@9)
+    NUMBER  shift, and go to state 54
+    VAR     shift, and go to state 55
+    NOT     shift, and go to state 56
 
-    $@9  go to state 98
+    L_EXPN     go to state 108
+    TERMINALS  go to state 58
 
 
 State 98
 
-   18 STATEMENT: IF LB $@5 L_EXPN RB $@6 $@7 STATEMENTS $@8 ELSE $@9 . $@10 STATEMENTS ENDIF
+   28 ELSEIF_BLOCK: ELSEIF LB $@12 L_EXPN . RB $@13 $@14 STATEMENTS
+   42 L_EXPN: L_EXPN . LAND $@18 L_EXPN
+   44       | L_EXPN . LOR $@19 L_EXPN
+   46       | L_EXPN . LEQ $@20 L_EXPN
+   48       | L_EXPN . GT $@21 L_EXPN
+   50       | L_EXPN . LT $@22 L_EXPN
+   52       | L_EXPN . NEQ $@23 L_EXPN
+   54       | L_EXPN . DEQ $@24 L_EXPN
 
-    $default  reduce using rule 17 ($@10)
-
-    $@10  go to state 99
+    RB    shift, and go to state 109
+    LEQ   shift, and go to state 74
+    GT    shift, and go to state 75
+    LT    shift, and go to state 76
+    NEQ   shift, and go to state 77
+    DEQ   shift, and go to state 78
+    LAND  shift, and go to state 79
+    LOR   shift, and go to state 80
 
 
 State 99
 
-   18 STATEMENT: IF LB $@5 L_EXPN RB $@6 $@7 STATEMENTS $@8 ELSE $@9 $@10 . STATEMENTS ENDIF
+   32 ELSE_BLOCK: ELSE $@15 . $@16 STATEMENTS
 
-    $default  reduce using rule 5 (STATEMENTS)
+    $default  reduce using rule 31 ($@16)
 
-    STATEMENTS  go to state 100
+    $@16  go to state 110
 
 
 State 100
 
+   14 STATEMENT: IF_BLOCK $@5 ELSEIF_BLOCKS $@6 ELSE_BLOCK ENDIF .
+
+    $default  reduce using rule 14 (STATEMENT)
+
+
+State 101
+
+   22 IF_BLOCK: IF LB $@9 L_EXPN RB $@10 $@11 . STATEMENTS
+
+    $default  reduce using rule 5 (STATEMENTS)
+
+    STATEMENTS  go to state 111
+
+
+State 102
+
+   42 L_EXPN: L_EXPN . LAND $@18 L_EXPN
+   44       | L_EXPN . LOR $@19 L_EXPN
+   46       | L_EXPN . LEQ $@20 L_EXPN
+   46       | L_EXPN LEQ $@20 L_EXPN .
+   48       | L_EXPN . GT $@21 L_EXPN
+   50       | L_EXPN . LT $@22 L_EXPN
+   52       | L_EXPN . NEQ $@23 L_EXPN
+   54       | L_EXPN . DEQ $@24 L_EXPN
+
+    $default  reduce using rule 46 (L_EXPN)
+
+
+State 103
+
+   42 L_EXPN: L_EXPN . LAND $@18 L_EXPN
+   44       | L_EXPN . LOR $@19 L_EXPN
+   46       | L_EXPN . LEQ $@20 L_EXPN
+   48       | L_EXPN . GT $@21 L_EXPN
+   48       | L_EXPN GT $@21 L_EXPN .
+   50       | L_EXPN . LT $@22 L_EXPN
+   52       | L_EXPN . NEQ $@23 L_EXPN
+   54       | L_EXPN . DEQ $@24 L_EXPN
+
+    $default  reduce using rule 48 (L_EXPN)
+
+
+State 104
+
+   42 L_EXPN: L_EXPN . LAND $@18 L_EXPN
+   44       | L_EXPN . LOR $@19 L_EXPN
+   46       | L_EXPN . LEQ $@20 L_EXPN
+   48       | L_EXPN . GT $@21 L_EXPN
+   50       | L_EXPN . LT $@22 L_EXPN
+   50       | L_EXPN LT $@22 L_EXPN .
+   52       | L_EXPN . NEQ $@23 L_EXPN
+   54       | L_EXPN . DEQ $@24 L_EXPN
+
+    $default  reduce using rule 50 (L_EXPN)
+
+
+State 105
+
+   42 L_EXPN: L_EXPN . LAND $@18 L_EXPN
+   44       | L_EXPN . LOR $@19 L_EXPN
+   46       | L_EXPN . LEQ $@20 L_EXPN
+   48       | L_EXPN . GT $@21 L_EXPN
+   50       | L_EXPN . LT $@22 L_EXPN
+   52       | L_EXPN . NEQ $@23 L_EXPN
+   52       | L_EXPN NEQ $@23 L_EXPN .
+   54       | L_EXPN . DEQ $@24 L_EXPN
+
+    $default  reduce using rule 52 (L_EXPN)
+
+
+State 106
+
+   42 L_EXPN: L_EXPN . LAND $@18 L_EXPN
+   44       | L_EXPN . LOR $@19 L_EXPN
+   46       | L_EXPN . LEQ $@20 L_EXPN
+   48       | L_EXPN . GT $@21 L_EXPN
+   50       | L_EXPN . LT $@22 L_EXPN
+   52       | L_EXPN . NEQ $@23 L_EXPN
+   54       | L_EXPN . DEQ $@24 L_EXPN
+   54       | L_EXPN DEQ $@24 L_EXPN .
+
+    $default  reduce using rule 54 (L_EXPN)
+
+
+State 107
+
+   42 L_EXPN: L_EXPN . LAND $@18 L_EXPN
+   42       | L_EXPN LAND $@18 L_EXPN .
+   44       | L_EXPN . LOR $@19 L_EXPN
+   46       | L_EXPN . LEQ $@20 L_EXPN
+   48       | L_EXPN . GT $@21 L_EXPN
+   50       | L_EXPN . LT $@22 L_EXPN
+   52       | L_EXPN . NEQ $@23 L_EXPN
+   54       | L_EXPN . DEQ $@24 L_EXPN
+
+    $default  reduce using rule 42 (L_EXPN)
+
+
+State 108
+
+   42 L_EXPN: L_EXPN . LAND $@18 L_EXPN
+   44       | L_EXPN . LOR $@19 L_EXPN
+   44       | L_EXPN LOR $@19 L_EXPN .
+   46       | L_EXPN . LEQ $@20 L_EXPN
+   48       | L_EXPN . GT $@21 L_EXPN
+   50       | L_EXPN . LT $@22 L_EXPN
+   52       | L_EXPN . NEQ $@23 L_EXPN
+   54       | L_EXPN . DEQ $@24 L_EXPN
+
+    $default  reduce using rule 44 (L_EXPN)
+
+
+State 109
+
+   28 ELSEIF_BLOCK: ELSEIF LB $@12 L_EXPN RB . $@13 $@14 STATEMENTS
+
+    $default  reduce using rule 26 ($@13)
+
+    $@13  go to state 112
+
+
+State 110
+
+   32 ELSE_BLOCK: ELSE $@15 $@16 . STATEMENTS
+
+    $default  reduce using rule 5 (STATEMENTS)
+
+    STATEMENTS  go to state 113
+
+
+State 111
+
     4 STATEMENTS: STATEMENTS . $@2 STATEMENT
-   18 STATEMENT: IF LB $@5 L_EXPN RB $@6 $@7 STATEMENTS $@8 ELSE $@9 $@10 STATEMENTS . ENDIF
+   22 IF_BLOCK: IF LB $@9 L_EXPN RB $@10 $@11 STATEMENTS .
 
-    ENDIF  shift, and go to state 101
-
+    ELSE      reduce using rule 22 (IF_BLOCK)
+    ENDIF     reduce using rule 22 (IF_BLOCK)
+    ELSEIF    reduce using rule 22 (IF_BLOCK)
     $default  reduce using rule 3 ($@2)
 
     $@2  go to state 10
 
 
-State 101
+State 112
 
-   18 STATEMENT: IF LB $@5 L_EXPN RB $@6 $@7 STATEMENTS $@8 ELSE $@9 $@10 STATEMENTS ENDIF .
+   28 ELSEIF_BLOCK: ELSEIF LB $@12 L_EXPN RB $@13 . $@14 STATEMENTS
 
-    $default  reduce using rule 18 (STATEMENT)
+    $default  reduce using rule 27 ($@14)
+
+    $@14  go to state 114
+
+
+State 113
+
+    4 STATEMENTS: STATEMENTS . $@2 STATEMENT
+   32 ELSE_BLOCK: ELSE $@15 $@16 STATEMENTS .
+
+    ENDIF     reduce using rule 32 (ELSE_BLOCK)
+    $default  reduce using rule 3 ($@2)
+
+    $@2  go to state 10
+
+
+State 114
+
+   28 ELSEIF_BLOCK: ELSEIF LB $@12 L_EXPN RB $@13 $@14 . STATEMENTS
+
+    $default  reduce using rule 5 (STATEMENTS)
+
+    STATEMENTS  go to state 115
+
+
+State 115
+
+    4 STATEMENTS: STATEMENTS . $@2 STATEMENT
+   28 ELSEIF_BLOCK: ELSEIF LB $@12 L_EXPN RB $@13 $@14 STATEMENTS .
+
+    ELSE      reduce using rule 28 (ELSEIF_BLOCK)
+    ENDIF     reduce using rule 28 (ELSEIF_BLOCK)
+    ELSEIF    reduce using rule 28 (ELSEIF_BLOCK)
+    $default  reduce using rule 3 ($@2)
+
+    $@2  go to state 10

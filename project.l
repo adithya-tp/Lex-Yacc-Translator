@@ -23,6 +23,7 @@
 "If"								{return IF;}
 "Else"								{return ELSE;}
 "EndIf"								{return ENDIF;}
+"ElseIf"							{return ELSEIF;}
 "goto"								{return GOTO;}
 "("									{return LB;}
 ")"									{return RB;}

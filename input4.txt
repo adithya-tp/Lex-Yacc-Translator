@@ -4,9 +4,9 @@ Begin:
 	var num:int;
 	var i,flag:int;
 	flag:=0;
-	write('Enter the value to be checked');
-	write('The value ', num, ' is not prime');
+	Write('Enter the value to be checked');
+	Write('The value ', num, ' is not prime');
 	c:=flag;
 Exit:
-	read(c,flag);
+	Read(c,flag);
 End:

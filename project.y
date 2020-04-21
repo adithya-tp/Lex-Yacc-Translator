@@ -22,7 +22,7 @@ int data_type;
 char var_name[30];
 }
 
-%token NUMBER PROC MAIN BGIN COLON END ASSIGNMENT VAR_START COMA SEMICOLON VAR READ LB RB WRITE QUOTED_STRING IF ELSE ENDIF GEQ LEQ GT LT NEQ DEQ NOT LAND LOR GOTO
+%token NUMBER PROC MAIN BGIN COLON END ASSIGNMENT VAR_START COMA SEMICOLON VAR READ LB RB WRITE QUOTED_STRING IF ELSE ENDIF GEQ LEQ GT LT NEQ DEQ NOT LAND LOR GOTO ELSEIF
 
 %left LAND LOR GEQ LEQ NOT GT LT NEQ DEQ
 
@@ -150,16 +150,33 @@ STATEMENT: 			VAR_START VAR_LIST COLON TYPE SEMICOLON {
 						printf(");\n");
 						idx = 0;
 					}
-					| IF LB {printf("if(");} 
-					  L_EXPN RB {printf("){\n");} 
-					  {printf("\t");} STATEMENTS {printf("\t}\n");}
-					  ELSE {printf("\telse{\n");} 
-					  {printf("\t");} STATEMENTS ENDIF {printf("\t}\n");}
+					| IF_BLOCK
+					  {printf("\t");} ELSEIF_BLOCKS
+					  {printf("\t}\n");} ELSE_BLOCK
+					  ENDIF {printf("\t}\n");}
 					| GOTO {printf("goto ");} 
     				  VAR {printf("%s", yylval.var_name);} 
 					  SEMICOLON {printf(";\n");}
 					| VAR COLON {printf("\b\b\b\b\b\b\b\b%s:\n", yylval.var_name);}
 
+IF_BLOCK:		 	IF LB {printf("if(");} 
+					L_EXPN RB {printf("){\n");} 
+					{printf("\t");} STATEMENTS
+					  	
+
+ELSEIF_BLOCKS:		ELSEIF_BLOCK ELSEIF_BLOCKS
+					| ELSEIF_BLOCK
+
+
+ELSEIF_BLOCK:		ELSEIF LB {printf("else if(");}
+					L_EXPN RB {printf("){\n");}
+					{printf("\t");} STATEMENTS
+					| ;
+
+ELSE_BLOCK: 	    ELSE {printf("\telse{\n");} 
+					{printf("\t");} STATEMENTS
+					| ;
+				
 VAR_LIST: 			VAR {
 						strcpy(var_list[idx], $1); 
 						idx++;
@@ -196,7 +213,7 @@ L_EXPN:				L_EXPN LAND {printf("&&");} L_EXPN
 					| L_EXPN NEQ {printf("!=");} L_EXPN
 					| L_EXPN DEQ {printf("==");} L_EXPN
 					| NOT {printf("!");} L_EXPN 
-					| TERMINALS {/*need to change this to TERMINALS later on*/}
+					| TERMINALS
 
 WRITE_VAR_LIST:		QUOTED_STRING {
 						strcpy(var_list[idx], yylval.var_name); 
@@ -230,8 +247,8 @@ A_EXPN: 			TERMINALS
 
 TERMINALS:			VAR {
 						if((temp=lookup_in_table(yylval.var_name))!=-1) {
+							printf("%s", yylval.var_name);
 							if(expn_type==-1){
-								printf("%s", yylval.var_name);
 								expn_type=temp;
 							}
 							else if(expn_type!=temp){

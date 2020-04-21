@@ -74,10 +74,11 @@ extern int yydebug;
     LAND = 284,
     LOR = 285,
     GOTO = 286,
-    INT = 287,
-    CHAR = 288,
-    FLOAT = 289,
-    DOUBLE = 290
+    ELSEIF = 287,
+    INT = 288,
+    CHAR = 289,
+    FLOAT = 290,
+    DOUBLE = 291
   };
 #endif
 /* Tokens.  */
@@ -110,10 +111,11 @@ extern int yydebug;
 #define LAND 284
 #define LOR 285
 #define GOTO 286
-#define INT 287
-#define CHAR 288
-#define FLOAT 289
-#define DOUBLE 290
+#define ELSEIF 287
+#define INT 288
+#define CHAR 289
+#define FLOAT 290
+#define DOUBLE 291
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -125,7 +127,7 @@ union YYSTYPE
 int data_type;
 char var_name[30];
 
-#line 129 "y.tab.h" /* yacc.c:1909  */
+#line 131 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

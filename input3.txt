@@ -4,6 +4,6 @@ Begin:
 	var num:int;
 	var i,flag:int;
 	flag:=0;
-	read(c,flag);
+	Read(c,flag);
 	c:=flag;
 End:
