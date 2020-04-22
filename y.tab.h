@@ -89,10 +89,11 @@ extern int yydebug;
     UNTIL = 299,
     WHILE = 300,
     ENDWHILE = 301,
-    INT = 302,
-    CHAR = 303,
-    FLOAT = 304,
-    DOUBLE = 305
+    COMMENT = 302,
+    INT = 303,
+    CHAR = 304,
+    FLOAT = 305,
+    DOUBLE = 306
   };
 #endif
 /* Tokens.  */
@@ -140,10 +141,11 @@ extern int yydebug;
 #define UNTIL 299
 #define WHILE 300
 #define ENDWHILE 301
-#define INT 302
-#define CHAR 303
-#define FLOAT 304
-#define DOUBLE 305
+#define COMMENT 302
+#define INT 303
+#define CHAR 304
+#define FLOAT 305
+#define DOUBLE 306
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -155,7 +157,7 @@ union YYSTYPE
 int data_type;
 char var_name[30];
 
-#line 159 "y.tab.h" /* yacc.c:1909  */
+#line 161 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

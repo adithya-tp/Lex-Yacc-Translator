@@ -1,5 +1,6 @@
 Procedure Main()
 Begin:
+	* comment *
 	var num:int;
 	var i,flag:int;
 	var c:char;

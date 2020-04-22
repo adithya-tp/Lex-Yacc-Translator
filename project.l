@@ -8,6 +8,7 @@
 %}
 %%
 
+"*"(.|\n)*"*"						{strcpy(yylval.var_name, yytext);return COMMENT;}
 "Procedure"							{return PROC;}
 "Main()"							{return MAIN;}
 "Begin"								{return BGIN;}
