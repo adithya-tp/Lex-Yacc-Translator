@@ -85,10 +85,12 @@ extern int yydebug;
     MUL = 295,
     DIV = 296,
     MOD = 297,
-    INT = 298,
-    CHAR = 299,
-    FLOAT = 300,
-    DOUBLE = 301
+    REPEAT = 298,
+    UNTIL = 299,
+    INT = 300,
+    CHAR = 301,
+    FLOAT = 302,
+    DOUBLE = 303
   };
 #endif
 /* Tokens.  */
@@ -132,10 +134,12 @@ extern int yydebug;
 #define MUL 295
 #define DIV 296
 #define MOD 297
-#define INT 298
-#define CHAR 299
-#define FLOAT 300
-#define DOUBLE 301
+#define REPEAT 298
+#define UNTIL 299
+#define INT 300
+#define CHAR 301
+#define FLOAT 302
+#define DOUBLE 303
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -147,7 +151,7 @@ union YYSTYPE
 int data_type;
 char var_name[30];
 
-#line 151 "y.tab.h" /* yacc.c:1909  */
+#line 155 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

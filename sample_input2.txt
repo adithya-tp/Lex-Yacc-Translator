@@ -1,0 +1,21 @@
+Procedure Main()
+Begin:
+	var num:int;
+	var i,flag:int;
+	flag:=0;
+	Write('Enter the value to be checked');
+	Read(num);
+	i:=2;
+	Repeat
+		If(num%i==0)
+			flag:=1;
+			goto Exit;
+		EndIf
+	Until(i==num-1)
+Exit:
+	If(flag==1)
+		Write('The value ',num,' is not prime');
+	Else
+		Write('The value ',num,' is prime');
+	EndIf
+End:

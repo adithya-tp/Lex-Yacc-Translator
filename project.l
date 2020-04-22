@@ -29,6 +29,8 @@
 "To"								{return TO;}
 "Do"								{return DO;}
 "EndFor"							{return ENDFOR;}
+"Repeat"							{return REPEAT;}
+"Until"								{return UNTIL;}
 "<-"								{return ARROW_ASSIGNMENT;}
 "("									{return LB;}
 ")"									{return RB;}

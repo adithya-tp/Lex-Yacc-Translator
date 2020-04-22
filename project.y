@@ -25,7 +25,7 @@ int data_type;
 char var_name[30];
 }
 
-%token NUMBER PROC MAIN BGIN COLON END ASSIGNMENT VAR_START COMA SEMICOLON VAR READ LB RB WRITE QUOTED_STRING IF ELSE ENDIF GEQ LEQ GT LT NEQ DEQ NOT LAND LOR GOTO ELSEIF FOR TO DO ENDFOR ARROW_ASSIGNMENT PLUS MINUS MUL DIV MOD
+%token NUMBER PROC MAIN BGIN COLON END ASSIGNMENT VAR_START COMA SEMICOLON VAR READ LB RB WRITE QUOTED_STRING IF ELSE ENDIF GEQ LEQ GT LT NEQ DEQ NOT LAND LOR GOTO ELSEIF FOR TO DO ENDFOR ARROW_ASSIGNMENT PLUS MINUS MUL DIV MOD REPEAT UNTIL
 
 %left LAND LOR GEQ LEQ NOT GT LT NEQ DEQ PLUS MINUS MUL DIV MOD
 
@@ -166,7 +166,10 @@ STATEMENT: 			VAR_START VAR_LIST COLON TYPE SEMICOLON {
 					  TO {printf("<=");} 
 					  A_EXPN {printf("; %s++", for_var);} 
 					  RB DO {printf("){\n"); tab_count++;} 
-					  STATEMENTS ENDFOR {tab_count--;printf("\t");printf("}\n");}
+					  STATEMENTS ENDFOR {tab_count--;print_tabs();printf("}\n");}
+					| REPEAT {printf("do{\n");tab_count++;}
+					  STATEMENTS UNTIL LB {tab_count--;print_tabs();printf("}while(");} 
+				      A_EXPN RB {printf(");\n");}
 					| VAR COLON {printf("\b\b\b\b\b\b\b\b%s:\n", yylval.var_name);}
 
 IF_BLOCK:		 	IF LB {printf("if(");} 
