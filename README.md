@@ -13,3 +13,11 @@ If you choose to play around with the lex ("project.l") and yacc ("project.y") f
 `flex project.l`  
 `yacc -dv project.y`  
 `gcc -o c2c lex.yy.c y.tab.c -lfl`
+
+# Example Input and Output
+
+  ## "Customized C" Language Input
+  ![Customized C Code](assets/customized_c.png)
+  
+  ## C Code Output
+  ![Normal C Code](assets/c.png)
