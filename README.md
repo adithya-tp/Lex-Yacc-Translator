@@ -5,7 +5,7 @@ This is a translator that I made as part of my course-work for Compiler Construc
 Simply pipe your input file into the translator executable "c2c":
 
 
-`./c2c < sample_inpus/sample_input1.txt`
+`./c2c < sample_inputs/sample_input1.txt`
 
 # Compiling Lex And Yacc
 If you choose to play around with the lex ("project.l") and yacc ("project.y") files, you would need to step through the following commands in the terminal to see your contributions / file changes in action. Make sure you've installed flex and bison on your system.
