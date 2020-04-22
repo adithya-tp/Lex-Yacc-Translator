@@ -31,6 +31,8 @@
 "EndFor"							{return ENDFOR;}
 "Repeat"							{return REPEAT;}
 "Until"								{return UNTIL;}
+"While"								{return WHILE;}
+"EndWhile"							{return ENDWHILE;}
 "<-"								{return ARROW_ASSIGNMENT;}
 "("									{return LB;}
 ")"									{return RB;}

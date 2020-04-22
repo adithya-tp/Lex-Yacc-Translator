@@ -1,0 +1,26 @@
+Procedure Main()
+Begin:
+	var num:int;
+	var i,flag:int;
+	var c:char;
+	flag:=0;
+	Write('Enter the value to be checked');
+	Read(num);
+	i:=2;
+	While(i!=num-1) Do
+		If(num%i==0)
+			flag:=1;
+			goto Exit;
+		EndIf
+	EndWhile
+Exit:
+	If(flag==1)
+		Write('The value ',num,' is not prime');
+	ElseIf(flag==2)
+		Write('Notice the format ',c,' specifier changed!');
+	ElseIf(flag==3)
+		Write('Notice multiple ',c,' format specifiers ', num, ' accomodated!');
+	Else
+		Write('The value ',num,' is prime');
+	EndIf
+End:
