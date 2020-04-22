@@ -8,7 +8,7 @@ Simply pipe your input file into the translator executable "c2c":
 `./c2c < input.txt`
 
 # Compiling Lex And Yacc
-If you choose to play around with the lex ("project.l") and yacc ("project.y") files, you would need to step through the following steps to see your contributions / file changes in action. Make sure you've installed flex and bison on your system.
+If you choose to play around with the lex ("project.l") and yacc ("project.y") files, you would need to step through the following commands in the terminal to see your contributions / file changes in action. Make sure you've installed flex and bison on your system.
 
 `flex project.l`  
 `yacc -dv project.y`  
