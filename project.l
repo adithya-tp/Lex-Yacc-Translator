@@ -40,8 +40,8 @@
 ";"									{return SEMICOLON;}
 ","									{return COMA;}
 ":="								{return ASSIGNMENT;}
-"&&"								{return LAND;}
-"||"								{return LOR;}
+"And"								{return LAND;}
+"Or"								{return LOR;}
 ">="								{return GEQ;}
 "<="								{return LEQ;}
 ">"									{return GT;}
@@ -53,7 +53,7 @@
 "*"									{return MUL;}
 "/"									{return DIV;}
 "%"									{return MOD;}
-"!"									{return NOT;}
+"Not"									{return NOT;}
 '[^'"]*'							{strcpy(yylval.var_name, yytext);
 									 return QUOTED_STRING;}
 [a-zA-Z]+							{strcpy(yylval.var_name, yytext);
